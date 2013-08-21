@@ -15,18 +15,18 @@ tags: [python]
 [字符串(String)](http://docs.python.org/3.3/library/string.html)  是一段文本字符，通常以某种形式向用户输出。如果我们打开Python的解释器，我们试着最常见的输出“Hello World!"应用:
 
 {% highlight python %}
-	>>> print ("Hello, world!")
-	Hello, world!
+>>> print ("Hello, world!")
+Hello, world!
 {% endhighlight %}
 
 Python 中的数据类型不需要像Java或C语言那样显示的定义，这就意味着在Python中字符串就是简单地用引号括起来来标识，向上面的“Hello, world!"那样。我们也可以使用单引号而不是双引号，当我们字符串中就有双引号时，使用单引号来表示整个字符串更加方便，如：
+```python
+>>> print ("This is David's program")
+This is David's program
 
-	>>> print ("This is David's program")
-	This is David's program
-	
-	>>> print ('"Hello", said David')
-	"Hello", said David
-
+>>> print ('"Hello", said David')
+"Hello", said David
+```
 从上面你就可以看出在不同的条件下如何交叉使用不同的引号。
 
 字符串提供了许多内置的函数，这些在很多Python程序中很有用处，它们包括：
