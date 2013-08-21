@@ -8,7 +8,7 @@ tags: [python]
 {% include JB/setup %}
 
 
-本文总结一下Python中用到的各种数据类型，以及如何引用可以使得我们的代码变得简洁，重点的地方使用***黑体加斜体***标出。
+本文总结一下Python中用到的各种数据类型，以及如何使用可以使得我们的代码变得简洁。
 ##基本结构##
 我们首先要看的是几乎任何语言都具有的数据类型，包括字符串、整型、浮点型以及布尔类型。这些基本数据类型组成了基本控制块，从而创建我们的Python应用程序。
 ###字符串###
@@ -20,13 +20,13 @@ Hello, world!
 {% endhighlight %}
 
 Python 中的数据类型不需要像Java或C语言那样显示的定义，这就意味着在Python中字符串就是简单地用引号括起来来标识，向上面的“Hello, world!"那样。我们也可以使用单引号而不是双引号，当我们字符串中就有双引号时，使用单引号来表示整个字符串更加方便，如：
-{% highlight python %}
+```python
 >>> print ("This is David's program")
 This is David's program
 
 >>> print ('"Hello", said David')
 "Hello", said David
-{% endhighlight %}
+```
 从上面你就可以看出在不同的条件下如何交叉使用不同的引号。
 
 字符串提供了许多内置的函数，这些在很多Python程序中很有用处，它们包括：
