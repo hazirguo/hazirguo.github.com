@@ -10,7 +10,7 @@ tags: [git]
 在 Windows 下使用Git基本上有两种方法：通过安装 Cygwin 或 msysGit 来使用Git。在两种不同的方案下，Git 的使用与 Linux 环境下的使用基本相同，另外还可以通过安装 msysGit 的图形界面软件 TortoiseGit (用过 SVN 的已经非常熟悉 TortoiseSVN，这里 TortoiseGit 和它有着非常相似的操作界面和方法）来使用 Git。这里我只介绍一下如何安装和使用 msysGit，让大家对 Git 的使用有个基础的了解。
 ## 在windows下安装 msysGit
 msysGit 名字前面四个字母来源与 MSYS 项目。MSYS项目源自于 MinGW（Minimaliest GNU for Windows，最简GNU工具集），通过增加一个 bash 提供的 shell 环境和其他相关的工具软件组成一个最简系统（Minimal SYStem），简称MSYS。利用 MinGW 提供的工具和 Git 针对 MinGW 的一个分支版本，在 Windows 平台为 Git 编译出一个原生应用，结合 MSYS 就组成了 msysGit。
-安装 Git 很简单，去 msysGit 的官网 http://msysgit.github.io 选择下载名为 `Git-<VERSION>-preview<DATA>.exe` 的版本，这里我们选择下载 Git-1.8.3-preview20130601.exe，选择安装路径，其他选项默认即可完成安装。
+安装 Git 很简单，去 msysGit 的官网 http://msysgit.github.io 选择下载名为 `Git-<VERSION>-preview<DATE>.exe` 的版本，这里我们选择下载 Git-1.8.3-preview20130601.exe，选择安装路径，其他选项默认即可完成安装。
 安装完成之后，鼠标右键会有 `Git Bash` 和 `Git GUI` 两种接口，为了能与 Linux 下保持一致且熟悉 Git 基本命令，推荐大家选择 Git Bash，和 Linux 下命令完全一致。
 ## msysGit 中 shell 环境的中文支持
 msysGit 中 Shell 环境的中文支持很不好，需要进行一些配置。
@@ -23,7 +23,8 @@ msysGit 中 Shell 环境的中文支持很不好，需要进行一些配置。
 所有用户都使用同一个专用的 SSH 帐号访问版本库，访问时通过公钥认证的方式。我们已经安装了 msysGit，启动 Git Bash，输入命令 `ssh-keygen` 命令即可产生公私钥，如图1：
 ![ssh-keygen](http://i.imgur.com/4wiYYzM.png)
 图1 产生SSH协议公私钥
-在用户主目录下（c:\Users\***\.ssh）生成公钥/私钥对，名字分别为 id_rsa.pub 和 id_rsa。
+
+在用户主目录下（`c:\Users\***\.ssh`）生成公钥/私钥对，名字分别为 id_rsa.pub 和 id_rsa。
 将你们的**公钥**发送给管理员，管理员将公钥添加到你能访问到资源库中，这样你就可以无口令登录到远程服务器，即用公钥认证代替口令认证。
 
 ### 克隆版本库
