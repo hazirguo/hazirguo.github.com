@@ -2,7 +2,7 @@
 layout: post
 title: "如何在windows下使用git"
 description: ""
-category: git(hub) 
+category: git 
 tags: [git]
 ---
 {% include JB/setup %}
