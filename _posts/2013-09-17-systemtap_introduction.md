@@ -35,6 +35,7 @@ systemtap是内核开发者必须要掌握的一个工具，本文我将简单�
 
 配置完之后，按照之前你编译内核的步骤编译即可。
 
+
 2. 获取systemtap源码
 从此地址 https://sourceware.org/systemtap/ftp/releases/ 下载已经发布的systemtap的源代码，截至目前（2013.9.17）最新版本为systemtap-2.3。下载完之后解压。
 当然你还可以使用 git 去克隆最新的版本（2.4），命令如下：
@@ -84,27 +85,27 @@ systemtap是内核开发者必须要掌握的一个工具，本文我将简单�
 
 创建systemtap脚本文件test2.stp:
 
-#!/usr/bin/stap
-
-probe begin 
-{
-	log("begin to probe")
-}
-
-probe syscall.open
-{
-	printf ("%s(%d) open (%s)\n", execname(), pid(), argstr)
-}
-
-probe timer.ms(4000) # after 4 seconds
-{
-	exit ()
-}
-
-probe end
-{
-	log("end to probe")
-}
+	#!/usr/bin/stap
+	
+	probe begin 
+	{
+		log("begin to probe")
+	}
+	
+	probe syscall.open
+	{
+		printf ("%s(%d) open (%s)\n", execname(), pid(), argstr)
+	}
+	
+	probe timer.ms(4000) # after 4 seconds
+	{
+		exit ()
+	}
+	
+	probe end
+	{
+		log("end to probe")
+	}
 
 将该脚本添加可执行的权限 `chmod +x test2.stp` ，使用`./test2.stp` 运行该脚本，即可打印4s内所有open系统调用的信息，打印格式为：进程名（进程号）打开什么文件。
 大家可以自行去测试，如果两个示例都能正确运行，基本上算是安装成功了！
