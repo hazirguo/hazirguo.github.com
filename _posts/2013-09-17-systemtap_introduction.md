@@ -27,6 +27,7 @@ systemtap是内核开发者必须要掌握的一个工具，本文我将简单�
 
 1. 编译内核以支持systemtap
 我们重新编译内核让其支持systemtap，首先你想让内核中有调试信息，编译内核时需要加上 -g 标志；其次，你还需要在配置内核时将 Kprobe 和 debugfs 开关打开。最终效果是，你能在内核 .config 文件中看到下面四个选项是设置的：
+
 		CONFIG_DEBUG_INFO
 		CONFIG_KPROBES
 		CONFIG_DEBUG_FS
@@ -36,11 +37,13 @@ systemtap是内核开发者必须要掌握的一个工具，本文我将简单�
 2. 获取systemtap源码
 从此地址 [https://sourceware.org/systemtap/ftp/releases](https://sourceware.org/systemtap/ftp/releases/)下载已经发布的systemtap的源代码，截至目前（2013.9.17）最新版本为systemtap-2.3。下载完之后解压。
 当然你还可以使用 git 去克隆最新的版本（2.4），命令如下：
+
 		git clone git://sources.redhat.com/git/systemtap.git
 
 3. 编译安装systemtap
 如果你下载的是最新版本的systemtap，那么你需要新版的 elfutils，可以从 [https://fedorahosted.org/releases/e/l/elfutils/](https://fedorahosted.org/releases/e/l/elfutils/) 下载elfutils-0.156 版本。下载之后解压缩到适合的目录（我放在~/Document/ 下），不需要安装，只要配置systemtap时指定其位置即可。
 进入之前解压systemtap的目录，使用下面命令进行配置：
+
 		 ./configure --with-elfutils=~/Document/elfutils-0.156
 以这里方法配置之后，你只需要再运行 **make install** 即完成systemtap的编译安装。如果需要卸载的话，运行 **make uninstall**。
 
