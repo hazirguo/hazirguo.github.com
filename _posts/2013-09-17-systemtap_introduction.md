@@ -25,12 +25,12 @@ tags: [linux, kernel, systemtap]
 1. 编译内核以支持systemtap
 我们重新编译内核让其支持systemtap，首先你想让内核中有调试信息，编译内核时需要加上 -g 标志；其次，你还需要在配置内核时将 Kprobe 和 debugfs 开关打开。最终效果是，你能在内核 .config 文件中看到下面四个选项是设置的：
 
-```
+{% highlight %}
 CONFIG_DEBUG_INFO
 CONFIG_KPROBES
 CONFIG_DEBUG_FS
 CONFIG_RELAY
-```
+{% endhighlight %}
 
 配置完之后，按照之前你编译内核的步骤编译即可。
 
@@ -40,9 +40,9 @@ CONFIG_RELAY
 
 当然你还可以使用 git 去克隆最新的版本（2.4），命令如下：
 
-```
+{% highlight bash %}
 git clone git://sources.redhat.com/git/systemtap.git
-```
+{% endhighlight %}
 
 
 3. 编译安装systemtap
@@ -50,25 +50,25 @@ git clone git://sources.redhat.com/git/systemtap.git
 
 进入之前解压systemtap的目录，使用下面命令进行配置：
 
-```
+{% highlight bash %}
  ./configure --with-elfutils=~/Document/elfutils-0.156
-```
+{% endhighlight %}
 
 以这里方法配置之后，你只需要再运行 **make install** 即完成systemtap的编译安装。如果需要卸载的话，运行 **make uninstall**。
 
 ### 方法二
 由于发行版的内核默认无内核调试信息，所以我们还需要一个调试内核镜像，在 http://ddebs.ubuntu.com/pool/main/l/linux/ 找到你的内核版本相对应的内核调试镜像（版本号包括后面的发布次数、硬件体系等都必须一致），如针对我上面的内核版本，就可以用如下命令下载安装内核调试镜像：
 
-```
+{% highlight bash %}
 $ wget http://ddebs.ubuntu.com/pool/main/l/linux/linux-image-debug-3.8.0-30-generic_dbgsym_3.8.0-30.43_i386.ddeb
 $ sudo dpkg -i linux-image-debug-3.8.0-30-generic_dbgsym_3.8.0-30.43_i386.ddeb
-```
+{% endhighlight %}
 
 一般这种方法下，你只需要使用apt在线安装systemtap即可：
 
-```
+{% highlight bash %}
 $sudo apt-get install systemtap
-```
+{% endhighlight %}
 
 当然方法二仅限于Ubuntu发行版，至于其他的发行版并不能照搬，网上也有很多相关的资料。
 
@@ -77,9 +77,9 @@ $sudo apt-get install systemtap
 ### 示例一：打印hello systemtap
 以root用户或者具有sudo权限的用户运行以下命令：
 
-```
+{% highlight bash %}
 $stap -ve probe 'begin { log("hello systemtap!") exit() }'
-```
+{% endhighlight %}
 
 如果安装正确，会得到如下类似的输出结果：
 <script src="https://gist.github.com/hazirguo/8db9a19a693d85b74fc5.js"></script>
@@ -88,7 +88,7 @@ $stap -ve probe 'begin { log("hello systemtap!") exit() }'
 
 创建systemtap脚本文件test2.stp:
 
-```
+{% highlight bash %}
 #!/usr/bin/stap
 
 probe begin 
@@ -110,7 +110,7 @@ probe end
 {
 	log("end to probe")
 }
-```
+{% endhighlight %}
 
 使用`./test2.stp` 运行该脚本，即可打印4s内所有open系统调用的信息，打印格式为：进程名（进程号）打开什么文件。
 大家可以自行去测试，如果两个示例都能正确运行，基本上算是安装成功了！
