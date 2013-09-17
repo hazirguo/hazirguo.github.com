@@ -33,8 +33,6 @@ CONFIG_RELAY
 {% endhighlight %}
 
 配置完之后，按照之前你编译内核的步骤编译即可。
-
-
 2. 获取systemtap源码
 从此地址 [https://sourceware.org/systemtap/ftp/releases/](https://sourceware.org/systemtap/ftp/releases/) 下载已经发布的systemtap的源代码，截至目前（2013.9.17）最新版本为systemtap-2.3。下载完之后解压。
 
@@ -43,8 +41,6 @@ CONFIG_RELAY
 {% highlight bash %}
 git clone git://sources.redhat.com/git/systemtap.git
 {% endhighlight %}
-
-
 3. 编译安装systemtap
 如果你下载的是最新版本的systemtap，那么你需要新版的 elfutils，可以从 [https://fedorahosted.org/releases/e/l/elfutils/](https://fedorahosted.org/releases/e/l/elfutils/) 下载elfutils-0.156 版本。下载之后解压缩到适合的目录（我放在~/Document/ 下），不需要安装，只要配置systemtap时指定其位置即可。
 
@@ -57,7 +53,7 @@ git clone git://sources.redhat.com/git/systemtap.git
 以这里方法配置之后，你只需要再运行 **make install** 即完成systemtap的编译安装。如果需要卸载的话，运行 **make uninstall**。
 
 ### 方法二
-由于发行版的内核默认无内核调试信息，所以我们还需要一个调试内核镜像，在 http://ddebs.ubuntu.com/pool/main/l/linux/ 找到你的内核版本相对应的内核调试镜像（版本号包括后面的发布次数、硬件体系等都必须一致），如针对我上面的内核版本，就可以用如下命令下载安装内核调试镜像：
+由于发行版的内核默认无内核调试信息，所以我们还需要一个调试内核镜像，在 [http://ddebs.ubuntu.com/pool/main/l/linux/](http://ddebs.ubuntu.com/pool/main/l/linux/) 找到你的内核版本相对应的内核调试镜像（版本号包括后面的发布次数、硬件体系等都必须一致），如针对我上面的内核版本，就可以用如下命令下载安装内核调试镜像：
 
 {% highlight bash %}
 $ wget http://ddebs.ubuntu.com/pool/main/l/linux/linux-image-debug-3.8.0-30-generic_dbgsym_3.8.0-30.43_i386.ddeb
@@ -112,7 +108,7 @@ probe end
 }
 {% endhighlight %}
 
-使用`./test2.stp` 运行该脚本，即可打印4s内所有open系统调用的信息，打印格式为：进程名（进程号）打开什么文件。
+将该脚本添加可执行的权限 `chmod +x test2.stp` ,使用`./test2.stp` 运行该脚本，即可打印4s内所有open系统调用的信息，打印格式为：进程名（进程号）打开什么文件。
 大家可以自行去测试，如果两个示例都能正确运行，基本上算是安装成功了！
 
 ## systemtap 工作原理
