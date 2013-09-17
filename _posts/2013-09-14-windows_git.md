@@ -40,22 +40,19 @@ $git clone git@1.0.0.89:test.git
 
 1. 简单配置   
 开始之前，这里只介绍一下 Git 的简单配置，例如下面命令：
-
 {% highlight bash %}
-$git config --global user.name "guohailin"
-$git config --global user.email hazirguo@gmail.com
+  $git config --global user.name "guohailin"
+  $git config --global user.email hazirguo@gmail.com
 {% endhighlight %}
-
 可以用来配置提交时使用的姓名和邮箱，当然配置一次就够了，以后提交如果不修改则不用再配置；更复杂的配置参见 [git-config(1) Manual Page](https://www.kernel.org/pub/software/scm/git/docs/git-config.html) 。
 
 2. 提交到本地库   
 我们需要将新增文件提交到本地的版本库中，如下命令新增一个文件greeting，内容为“hello”，提交到本地的版本库：
-
 {% highlight bash %}
-$touch greeting
-$echo "hello" >> greeting
-$git add greeting        #添加greeting文件到暂存区
-$git commit -m "add file greeting by guohl"		#提交到本地版本库，-m 后加上注释
+  $touch greeting
+  $echo "hello" >> greeting
+  $git add greeting        #添加greeting文件到暂存区
+  $git commit -m "add file greeting by guohl"		#提交到本地版本库，-m 后加上注释
 {% endhighlight %}
 
 3. 更新到远程服务器   
