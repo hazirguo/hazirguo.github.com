@@ -40,6 +40,7 @@ $git clone git@1.0.0.89:test.git
 
 1. 简单配置   
 开始之前，这里只介绍一下 Git 的简单配置，例如下面命令：
+
 {% highlight bash %}
 $git config --global user.name "guohailin"
 $git config --global user.email hazirguo@gmail.com
@@ -49,6 +50,7 @@ $git config --global user.email hazirguo@gmail.com
 
 2. 提交到本地库   
 我们需要将新增文件提交到本地的版本库中，如下命令新增一个文件greeting，内容为“hello”，提交到本地的版本库：
+
 {% highlight bash %}
 $touch greeting
 $echo "hello" >> greeting
