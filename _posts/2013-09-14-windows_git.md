@@ -44,6 +44,7 @@ $git clone git@1.0.0.89:test.git
 $git config --global user.name "guohailin"
 $git config --global user.email hazirguo@gmail.com
 {% endhighlight %}
+
 可以用来配置提交时使用的姓名和邮箱，当然配置一次就够了，以后提交如果不修改则不用再配置；更复杂的配置参见 [git-config(1) Manual Page](https://www.kernel.org/pub/software/scm/git/docs/git-config.html) 。
 
 2. 提交到本地库   
@@ -54,6 +55,7 @@ $echo "hello" >> greeting
 $git add greeting        #添加greeting文件到暂存区
 $git commit -m "add file greeting by guohl"		#提交到本地版本库，-m 后加上注释
 {% endhighlight %}
+
 3. 更新到远程服务器   
 提交到本地服务器之后，还需要提交到远程服务器，很简单，只需要使用 `git push` 命令即可。
 
@@ -69,6 +71,7 @@ $git commit -m "add file greeting by guohl"		#提交到本地版本库，-m 后�
 
 ----
 参考资料：
+
 * Git 权威指南    蒋鑫 著      机械工业出版社
 * Pro Git     http://git-scm.com/book
 
