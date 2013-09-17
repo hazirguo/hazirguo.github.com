@@ -23,6 +23,7 @@ systemtap是内核开发者必须要掌握的一个工具，本文我将简单�
 我的主机 Linux 发行版是32位 Ubuntu13.04，内核版本 3.8.0-30。由于 systemtap 运行需要内核的调试信息支撑，默认发行版的内核在配置时这些调试开关没有打开，所以安装完systemtap也是无法去探测内核信息的。
 下面我以两种方式安装并运行 systemtap：
 ### 方法一
+
 1. 编译内核以支持systemtap
 我们重新编译内核让其支持systemtap，首先你想让内核中有调试信息，编译内核时需要加上 -g 标志；其次，你还需要在配置内核时将 Kprobe 和 debugfs 开关打开。最终效果是，你能在内核 .config 文件中看到下面四个选项是设置的：
 
@@ -34,6 +35,7 @@ CONFIG_RELAY
 {% endhighlight %}
 
 配置完之后，按照之前你编译内核的步骤编译即可。
+
 2. 获取systemtap源码
 从此地址 [https://sourceware.org/systemtap/ftp/releases/](https://sourceware.org/systemtap/ftp/releases/) 下载已经发布的systemtap的源代码，截至目前（2013.9.17）最新版本为systemtap-2.3。下载完之后解压。
 
@@ -42,6 +44,7 @@ CONFIG_RELAY
 {% highlight bash %}
 git clone git://sources.redhat.com/git/systemtap.git
 {% endhighlight %}
+
 3. 编译安装systemtap
 如果你下载的是最新版本的systemtap，那么你需要新版的 elfutils，可以从 [https://fedorahosted.org/releases/e/l/elfutils/](https://fedorahosted.org/releases/e/l/elfutils/) 下载elfutils-0.156 版本。下载之后解压缩到适合的目录（我放在~/Document/ 下），不需要安装，只要配置systemtap时指定其位置即可。
 
