@@ -8,27 +8,27 @@ tags: [kernel, syscall, marco]
 {% include JB/setup %}
 
 我们习惯在SI（Source Insight)中阅读Linux内核，SI会建立符号表数据库，能非常方便地跳转到变量、宏、函数等的定义处。但在处理系统调用的函数时，却会遇到一些麻烦：我们知道系统调用函数名的特点是sys_×××，例如我们想找open函数的内核系统调用代码，在SI提供的符号表中搜索sys_open，能找到函数的声明：
-``` c
+{% highlight c %}
 asmlinkage long sys_open(const char __user *filename, int flags, umode_t mode);
-```
+{% endhighlight %}
 原本SI提供从函数名按住Ctrl单击鼠标左键能跳转到定义处的功能，但运用在系统调用函数sys_open上却失败了，这是什么回事呢？
 
 
 ## 系统调用宏定义展开
 经过分析，原来内核中系统调用采用了宏定义，如这里的sys_open就被定义为：
-``` c
+{% highlight c %}
 SYSCALL_DEFINE3(open, const char __user *, filename, int, flags, umode_t, mode)
-```
+{% endhighlight %}
 
 可以猜测出这个宏定义展开之后就是上面函数声明那样的，难怪SI不能跳转到系统调用的定义处呢！
 
 下面以open系统调用为例分析这个宏是如何展开的：
 
 首先在 `include/linux/syscall.h` 中有下面这样的宏定义：
-``` c
+{% highlight c %}
 #define SYSCALL_DEFINE3(name, ...) 				\
 	SYSCALL_DEFINEx(3, _##name, __VA_ARGS__)
-```
+{% endhighlight %}
 
 针对这个宏定义有几点说明：
 
@@ -36,15 +36,15 @@ SYSCALL_DEFINE3(open, const char __user *, filename, int, flags, umode_t, mode)
 2. …：省略号代表可变的部分，下面用`__VA_AEGS__` 代表省略的变长部分；
 3. \#\#：分隔连接方式，它的作用是先分隔，然后进行强制连接，例如：
 
-``` c
+{% highlight c %}
 #define VAR(type, name) type name##_##type
 VAR(int, var1);
 展开之后就是：
 int var1_int;
-```
+{% endhighlight %}
 
 那么：
-``` c
+{% highlight c %}
 SYSCALL_DEFINE3(open, const char __user *, filename, int, flags, umode_t, mode)
 展开之后是：
 SYSCALL_DEFINEx(3, _open, __VA_ARGS__)
@@ -63,45 +63,45 @@ __SYSCALL_DEFINEx(3, _open, __VA_ARGS__)
 __SYSCALL_DEFINEx(3, _open, __VA_ARGS__)
 展开为：
 asmlinkage long sys_name(__SC_DECL3(__VA_ARGS__))
-```
+{% endhighlight %}
 
 这里 `__VA_ARGS__` 是 `const char __user *, filename, int, flags, umode_t, mode`，而同样`__SC_DECL3` 又是一组宏定义：
 
-``` c
+{% highlight c %}
 #define __SC_DECL1(t1, a1)	t1 a1
 #define __SC_DECL2(t2, a2, ...) t2 a2, __SC_DECL1(__VA_ARGS__)
 #define __SC_DECL3(t3, a3, ...) t3 a3, __SC_DECL2(__VA_ARGS__)
-```
+{% endhighlight %}
 
 这样，一步一步地展开：
-``` c
+{% highlight c %}
 __SC_DECL3(const char __user *, filename, int, flags, umode_t, mode)
 ==>   __SC_DECL3(const char __user *, filename, int, flags, umode_t, mode)
 ==>   const char __user* filename, __SC_DECL2( int, flags, umode_t, mode)
 ==>   const char __user* filename, int flags, __SC_DECL1(umode_t, mode)
 ==>   const char __user* filename, int flags, umode_t mode
-```
+{% endhighlight %}
 
 最终：
-``` c
+{% highlight c %}
 SYSCALL_DEFINE3(open, const char __user *, filename, int, flags, umode_t, mode)
 宏定义展开之后就成为：
 asmlinkage long sys_open(const char __user *filename, int flags, umode_t mode);
-```
+{% endhighlight %}
 
 正如我们之前猜测的那样。
 
 ## 如何在 SI 中找到系统调用源代码
 回到开始的话题，既然不能直接通过系统调用声明跳转到定义的代码处，那么怎样在 SI 快速找到系统调用的源码呢？通过上面的sys_open 的展开，相信大家已经知道带有三个参数的系统调用展开的过程，由于系统调用中最多可以带有六个参数，那么Linux 内核中定义了一组宏用来展开带有不同参数的系统调用：
 
-``` c
+{% highlight c %}
 #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
 #define SYSCALL_DEFINE2(name, ...) SYSCALL_DEFINEx(2, _##name, __VA_ARGS__)
 #define SYSCALL_DEFINE3(name, ...) SYSCALL_DEFINEx(3, _##name, __VA_ARGS__)
 #define SYSCALL_DEFINE4(name, ...) SYSCALL_DEFINEx(4, _##name, __VA_ARGS__)
 #define SYSCALL_DEFINE5(name, ...) SYSCALL_DEFINEx(5, _##name, __VA_ARGS__)
 #define SYSCALL_DEFINE6(name, ...) SYSCALL_DEFINEx(6, _##name, __VA_ARGS__)
-```
+{% endhighlight %}
 
 那么有了这些宏之后，系统调用定义处的部分就可以用宏来代替了，如：
 
@@ -126,14 +126,14 @@ asmlinkage long sys_open(const char __user *filename, int flags, umode_t mode);
 意思是说，在Linux 2.6.28及以前版本内核中，IBM/S390、PowerPC、Sparc64以及MIPS 64位平台的ABI要求在系统调用时，用户空间程序将系统调用中32位的参数存放在64位的寄存器中要做到正确的符号扩展，但是用户空间程序却不能保证做到这点，这样就会可以通过向有漏洞的系统调用传送特制参数便可以导致系统崩溃或获得权限提升。
 
 举例来说，假如下面是个系统调用的内核代码，参数是32位的无符号整型，但使用的64位寄存器传参，上面提及到平台的ABI要求32为参数存放在64位寄存器中要符号扩展，由程序的调用者来完成，在系统调用的函数中则由用户程序来保证进行了正确的寄存器符号扩展，但用户空间程序却无法保证。
-``` c
+{% highlight c %}
 asmlinkage long sys_example(unsigned int index)
 {
     if (index > 5)
         return -EINVAL;
     return example_array[index];
 }
-```
+{% endhighlight %}
 
 在上面程序中，调用程序必须将索引符号扩展为64位，如传入参数index=3，那么将寄存器的低32位赋值为3，并未修改高32位，此时该寄存器的高32位假设为0xFFFFFFFF，在进入该系统调用函数时，由于编译器认为你已经进行符号扩展了，所以直接引用64位寄存器的值代表index，此时index=-4294967293，判断不大于5，返回example_array[-4294967293]，很可能访问到一块没有权限访问的地址空间或者其他地址异常的错误而导致程序崩溃。
 
@@ -141,7 +141,7 @@ asmlinkage long sys_example(unsigned int index)
 
 在Linux内核中，解决这个问题的办法很巧妙，它先将所有参数都当成long类型（64位），然后再强制转化到相应的类型，这样就能解决问题了。如果去每个系统调用中一一这么做，这是一般程序员选择的做法，但写内核的大牛们不仅要完成功能，而且完成得有艺术！这就出现了现在的做法，定义了下面的宏：
 
-``` c
+{% highlight c %}
 #define __SYSCALL_DEFINEx(x, name, ...)					\
 	asmlinkage long sys##name(__SC_DECL##x(__VA_ARGS__));		\
 	static inline long SYSC##name(__SC_DECL##x(__VA_ARGS__));	\
@@ -152,11 +152,11 @@ asmlinkage long sys_example(unsigned int index)
 	}								\
 	SYSCALL_ALIAS(sys##name, SyS##name);				\
 	static inline long SYSC##name(__SC_DECL##x(__VA_ARGS__))
-```
+{% endhighlight %}
 
 那么仍然是以open系统调用为例，
 
-``` c
+{% highlight c linenos %}
 SYSCALL_DEFINE3(open, const char __user *, filename, int, flags, umode_t, mode)
 {
 	…
@@ -175,7 +175,7 @@ static inline long SYSC_open(const char __user * filename, int flags, umode_t mo
 {
 	…
 }
-```
+{% endhighlight %}
 
 * 第11行 `__SC_TEST3` 宏没展开，其实是编译时检查类型是否错误的代码，和我们这里讨论的关系不大，展开之后也是个很有意思的宏定义，可以参考我[这里的一篇文章](http://blog.csdn.net/hazir/article/details/9336299 'Linux Kernel 代码艺术——编译时断言') 。
 * 第17行` SYSCALL_ALIAS` 宏夜没展开，意思即 sys_open 函数的别名是 SyS_open。
