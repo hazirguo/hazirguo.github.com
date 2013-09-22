@@ -44,14 +44,16 @@ chmod failed, errno = 1
 
 上面系统调用返回的值为-1，说明系统调用失败，错误码为1，在 `/usr/include/asm-generic/errno-base.h` 文件中有如下错误代码说明：
 {% highlight c %}
-#define EPERM		1	/* Operation not permitted */
+#define EPERM	     	1	            /* Operation not permitted */
 {% endhighlight %}
 即无权限进行该操作，我们以普通用户权限是无法修改 /etc/passwd 文件的属性的，结果正确。
 
 
 ## 使用 syscall 直接调用
 使用上面的方法有很多好处，首先你无须知道更多的细节，如 chmod 系统调用号，你只需了解 glibc 提供的 API 的原型；其次，该方法具有更好的移植性，你可以很轻松将该程序移植到其他平台，或者将 glibc 库换成其它库，程序只需做少量改动。
+
 但有点不足是，如果 glibc 没有封装某个内核提供的系统调用时，我就没办法通过上面的方法来调用该系统调用。如我自己通过编译内核增加了一个系统调用，这时 glibc 不可能有你新增系统调用的封装 API，此时我们可以利用 glibc 提供的 `syscall` 函数直接调用。该函数定义在 `unistd.h` 头文件中，函数原型如下：
+
 {% highlight c %}
 long int syscall (long int sysno, ...)
 {% endhighlight %}
@@ -125,7 +127,7 @@ int main()
 
 ---
 
-** 参考资料 **
+**参考资料**
 
 * Understanding The Linux Kernel, the 3rd edtion
 * The GNU C Library Reference Manual, for version 2.18
