@@ -38,7 +38,7 @@ int main()
 {% endhighlight %}
 在普通用户下编译运用，输出结果为：
 
-{% highlight %}
+{% highlight c %}
 chmod failed, errno = 1
 {% endhighlight %}
 
@@ -51,6 +51,7 @@ chmod failed, errno = 1
 
 ## 使用 syscall 直接调用
 使用上面的方法有很多好处，首先你无须知道更多的细节，如 chmod 系统调用号，你只需了解 glibc 提供的 API 的原型；其次，该方法具有更好的移植性，你可以很轻松将该程序移植到其他平台，或者将 glibc 库换成其它库，程序只需做少量改动。
+
 但有点不足是，如果 glibc 没有封装某个内核提供的系统调用时，我就没办法通过上面的方法来调用该系统调用。如我自己通过编译内核增加了一个系统调用，这时 glibc 不可能有你新增系统调用的封装 API，此时我们可以利用 glibc 提供的 `syscall` 函数直接调用。该函数定义在 `unistd.h` 头文件中，函数原型如下：
 {% highlight c %}
 long int syscall (long int sysno, ...)
