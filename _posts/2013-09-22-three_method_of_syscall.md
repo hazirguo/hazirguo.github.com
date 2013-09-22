@@ -7,4 +7,6 @@ tags: [syscall, kernel]
 ---
 {% include JB/setup %}
 
-系统调用
+This is just for testing。。。。。
+。。。。
+
