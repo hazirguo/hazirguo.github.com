@@ -7,15 +7,6 @@ tags: [linux, array]
 ---
 {% include JB/setup %}
 
----
-layout: post
-title: "2013年07月第三周周报"
-description: ""
-category: report 
-tags: [weekly, report]
----
-{% include JB/setup %}
-
 前几天看内核中系统调用代码，在系统调用向量表初始化中，有下面这段代码写的让我有点摸不着头脑：
 
 {% highlight c %}
