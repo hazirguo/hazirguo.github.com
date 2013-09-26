@@ -79,7 +79,6 @@ __SYSCALL_I386 是一个宏定义：
 {% endhighlight %}
 
 这样上面的系统调用表定义就展开为：
-
 {% highlight c %}
 const sys_call_ptr_t sys_call_table[__NR_syscall_max+1] = {
 	[0 ... __NR_syscall_max] = &sys_ni_syscall,
@@ -92,7 +91,6 @@ const sys_call_ptr_t sys_call_table[__NR_syscall_max+1] = {
 {% endhighlight %}
 
 当用户进程发生系统调用，通过软中断 int 0x80 或者 sysenter 指令陷入到内核态，首先保存寄存器，然后检查系统调用号是否合法，最后跳转到相应的内核系统调用函数中执行：
-
 {% highlight c %}
 ENTRY(system_call)
 	pushl_cfi %eax			# 保存原始 eax
