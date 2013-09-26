@@ -93,7 +93,7 @@ const sys_call_ptr_t sys_call_table[__NR_syscall_max+1] = {
 
 当用户进程发生系统调用，通过软中断 int 0x80 或者 sysenter 指令陷入到内核态，首先保存寄存器，然后检查系统调用号是否合法，最后跳转到相应的内核系统调用函数中执行：
 
-{% highlight asm %} 
+{% highlight c %} 
 ENTRY(system_call)
 	pushl_cfi %eax			# 保存原始 eax
 	SAVE_ALL                # 保存寄存器帧
