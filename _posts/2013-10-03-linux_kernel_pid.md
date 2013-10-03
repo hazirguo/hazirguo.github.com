@@ -19,8 +19,10 @@ Linux 内核使用 `task_struct` 数据结构来关联所有与进程有关的�
 
 ## PID 命名空间 ##
 命名空间是为操作系统层面的虚拟化机制提供支撑，目前实现的有六种不同的命名空间，分别为mount命名空间、UTS命名空间、IPC命名空间、用户命名空间、PID命名空间、网络命名空间。命名空间简单来说提供的是对全局资源的一种抽象，将资源放到不同的容器中（不同的命名空间），各容器彼此隔离。命名空间有的还有层次关系，如PID命名空间，图1 为命名空间的层次关系图。
+
 ![linux_pid0](https://f.cloud.github.com/assets/3265880/1260157/16500580-2c03-11e3-8056-f055ddedfb5b.png)
-*图1 命名空间的层次关系*
+
+***图1 命名空间的层次关系***
 
 在上图有四个命名空间，一个父命名空间衍生了两个子命名空间，其中的一个子命名空间又衍生了一个子命名空间。以PID命名空间为例，由于各个命名空间彼此隔离，所以每个命名空间都可以有 PID 号为 1 的进程；但又由于命名空间的层次性，父命名空间是知道子命名空间的存在，因此子命名空间要映射到父命名空间中去，因此上图中 level 1 中两个子命名空间的六个进程分别映射到其父命名空间的PID 号5~10。
 
@@ -63,7 +65,7 @@ struct pid {
 
 ![](http://i.imgur.com/dago7oL.png)
 
-*图2 一个task_struct对应一个PID*
+***图2 一个task_struct对应一个PID***
 
 图中还有两个结构上面未提及：
 
@@ -117,7 +119,7 @@ struct pid {
 
 ![](http://i.imgur.com/8KjglQ3.png)
 
-*图3 增加ID类型的结构*
+***图3 增加ID类型的结构***
 
 关于上图有几点需要说明：
 
@@ -153,7 +155,7 @@ struct upid {
 
 ![](http://i.imgur.com/9wShbjB.png)
 
-*图4 增加PID命名空间之后的结构图*
+***图4 增加PID命名空间之后的结构图***
 
 图中关于如果分配唯一的 PID 没有画出，但也是比较简单，与前面两种情形不同的是，这里分配唯一的 PID 是有命名空间的容器的，在PID命名空间内必须唯一，但各个命名空间之间不需要唯一。
 
@@ -166,48 +168,48 @@ struct upid {
 ### 获得局部ID ###
 根据进程的 task_struct、ID类型、命名空间，可以很容易获得其在命名空间内的局部ID：
 
-1. 获得与task_struct 关联的pid结构体。辅助函数有 task_pid、task_tgid、task_pgrp和task_session，分别用来获取不同类型的ID的pid 实例，如获取 PID 的实例：
+1.获得与task_struct 关联的pid结构体。辅助函数有 task_pid、task_tgid、task_pgrp和task_session，分别用来获取不同类型的ID的pid 实例，如获取 PID 的实例：
 
-	{% highlight c %}
-	static inline struct pid *task_pid(struct task_struct *task)
-	{
-		return task->pids[PIDTYPE_PID].pid;
-	}
-	{% endhighlight %}
+{% highlight c %}
+static inline struct pid *task_pid(struct task_struct *task)
+{
+	return task->pids[PIDTYPE_PID].pid;
+}
+{% endhighlight %}
 获取线程组的ID，前面也说过，TGID不过是线程组组长的PID而已，所以：
-	{% highlight c %}
-	static inline struct pid *task_tgid(struct task_struct *task)
-	{
-		return task->group_leader->pids[PIDTYPE_PID].pid;
-	}
-	{% endhighlight %}
+{% highlight c %}
+static inline struct pid *task_tgid(struct task_struct *task)
+{
+	return task->group_leader->pids[PIDTYPE_PID].pid;
+}
+{% endhighlight %}
 而获得PGID和SID，首先需要找到该线程组组长的task_struct，再获得其相应的 pid：
-	{% highlight c %}
-	static inline struct pid *task_pgrp(struct task_struct *task)
-	{
-		return task->group_leader->pids[PIDTYPE_PGID].pid;
+{% highlight c %}
+static inline struct pid *task_pgrp(struct task_struct *task)
+{
+	return task->group_leader->pids[PIDTYPE_PGID].pid;
+}
+
+static inline struct pid *task_session(struct task_struct *task)
+{
+	return task->group_leader->pids[PIDTYPE_SID].pid;
+}
+{% endhighlight %}
+2.获得 pid 实例之后，再根据 pid 中的numbers 数组中 uid 信息，获得局部PID。
+{% highlight c %}
+pid_t pid_nr_ns(struct pid *pid, struct pid_namespace *ns)
+{
+	struct upid *upid;
+	pid_t nr = 0;
+
+	if (pid && ns->level <= pid->level) {
+		upid = &pid->numbers[ns->level];
+		if (upid->ns == ns)
+			nr = upid->nr;
 	}
-	
-	static inline struct pid *task_session(struct task_struct *task)
-	{
-		return task->group_leader->pids[PIDTYPE_SID].pid;
-	}
-	{% endhighlight %}
-2. 获得 pid 实例之后，再根据 pid 中的numbers 数组中 uid 信息，获得局部PID。
-	{% highlight c %}
-	pid_t pid_nr_ns(struct pid *pid, struct pid_namespace *ns)
-	{
-		struct upid *upid;
-		pid_t nr = 0;
-	
-		if (pid && ns->level <= pid->level) {
-			upid = &pid->numbers[ns->level];
-			if (upid->ns == ns)
-				nr = upid->nr;
-		}
-		return nr;
-	}
-	{% endhighlight %}
+	return nr;
+}
+{% endhighlight %}
 这里值得注意的是，由于PID命名空间的层次性，父命名空间能看到子命名空间的内容，反之则不能，因此，函数中需要确保当前命名空间的level 小于等于产生局部PID的命名空间的level。
 除了这个函数之外，内核还封装了其他函数用来从 pid 实例获得 PID 值，如 pid_nr、pid_vnr 等。在此不介绍了。
 
@@ -223,39 +225,39 @@ pid_t task_session_nr_ns(struct task_struct *tsk, struct pid_namespace *ns);
 ### 查找进程task_struct ###
 根据局部ID、以及命名空间，怎样获得进程的task_struct结构体呢？也是分两步：
 
-1. 获得 pid 实体。根据局部PID以及命名空间计算在 pid_hash 数组中的索引，然后遍历散列表找到所要的 upid， 再根据内核的 container_of 机制找到 pid 实例。代码如下：
+1.获得 pid 实体。根据局部PID以及命名空间计算在 pid_hash 数组中的索引，然后遍历散列表找到所要的 upid， 再根据内核的 container_of 机制找到 pid 实例。代码如下：
 
-	{% highlight c %}
-	struct pid *find_pid_ns(int nr, struct pid_namespace *ns)
-	{
-		struct hlist_node *elem;
-		struct upid *pnr;
-	
-		//遍历散列表
-		hlist_for_each_entry_rcu(pnr, elem,
-				&pid_hash[pid_hashfn(nr, ns)], pid_chain)     //pid_hashfn() 获得hash的索引
-			if (pnr->nr == nr && pnr->ns == ns)     //比较 nr 与 ns 是否都相同
-				return container_of(pnr, struct pid,     //根据container_of机制取得pid 实体
-						numbers[ns->level]);
-	
-		return NULL;
+{% highlight c %}
+struct pid *find_pid_ns(int nr, struct pid_namespace *ns)
+{
+	struct hlist_node *elem;
+	struct upid *pnr;
+
+	//遍历散列表
+	hlist_for_each_entry_rcu(pnr, elem,
+			&pid_hash[pid_hashfn(nr, ns)], pid_chain)     //pid_hashfn() 获得hash的索引
+		if (pnr->nr == nr && pnr->ns == ns)     //比较 nr 与 ns 是否都相同
+			return container_of(pnr, struct pid,     //根据container_of机制取得pid 实体
+					numbers[ns->level]);
+
+	return NULL;
+}
+{% endhighlight %}
+2.根据ID类型取得task_struct 结构体。
+{% highlight c %}
+struct task_struct *pid_task(struct pid *pid, enum pid_type type)
+{
+	struct task_struct *result = NULL;
+	if (pid) {
+		struct hlist_node *first;
+		first = rcu_dereference_check(hlist_first_rcu(&pid->tasks[type]),
+					      lockdep_tasklist_lock_is_held());
+		if (first)
+			result = hlist_entry(first, struct task_struct, pids[(type)].node);
 	}
-	{% endhighlight %}
-2. 根据ID类型取得task_struct 结构体。
-	{% highlight c %}
-	struct task_struct *pid_task(struct pid *pid, enum pid_type type)
-	{
-		struct task_struct *result = NULL;
-		if (pid) {
-			struct hlist_node *first;
-			first = rcu_dereference_check(hlist_first_rcu(&pid->tasks[type]),
-						      lockdep_tasklist_lock_is_held());
-			if (first)
-				result = hlist_entry(first, struct task_struct, pids[(type)].node);
-		}
-		return result;
-	}
-	{% endhighlight %}
+	return result;
+}
+{% endhighlight %}
 
 内核还提供其它函数用来实现上面两步：
 {% highlight c %}
@@ -314,21 +316,5 @@ struct pid *alloc_pid(struct pid_namespace *ns)
 
 * 深入Linux 内核架构（以前不觉得这本书写得多好，现在倒发现还不错，本文很多都是照抄上面的）
 * 周徐达师弟的PPT（让我受益匪浅的一次讨论，周由浅入深告诉我们该数据结构是如何设计出来的，本文主思路就是按照该PPT，在此 **特别感谢**！）
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
