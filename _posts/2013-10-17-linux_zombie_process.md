@@ -56,7 +56,7 @@ int main()
 
 父进程并没有写 wait 等系统调用函数，因此在子进程退出之后变成僵尸进程，父进程并没有为其去收尸。我们使用下面命令编译运行该进程，然后查看系统中进程状态：
 
-{% highlight c %}
+{% highlight bash %}
 guohailin@guohailin:~/Documents$ gcc zombie.c -o zombie
 guohailin@guohailin:~/Documents$ ./zombie 
 in parent process, sleep for one miniute...zZ...
@@ -64,13 +64,13 @@ in child process, and exit!
 
 # 打开另一个终端:
 guohailin@guohailin:~$ ps aux | grep -w 'Z'
-1000      2211  1.2  0.0      0     0 ?        Z    13:24   6:53 [chromium-browse] <defunct>
+1000      2211  1.2  0.0      0     0 ?       Z    13:24   6:53 [chromium-browse] <defunct>
 1000      4400  0.0  0.0      0     0 ?        Z    10月16   0:00 [fcitx] <defunct>
 1000     10871  0.0  0.0      0     0 pts/4    Z+   22:32   0:00 [zombie] <defunct>
 {% endhighlight %}
 
 从上面可以看出，系统中多了一个僵尸进程。但如果等父进程睡眠醒来退出之后，我们再次查看系统进程信息，发现刚才的僵尸进程不见了。
-{% highlight c %}
+{% highlight bash %}
 guohailin@guohailin:~/Documents$ ./zombie 
 in parent process, sleep for one miniute...zZ...
 in child process, and exit!
