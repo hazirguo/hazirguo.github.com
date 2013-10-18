@@ -8,8 +8,6 @@ tags: [linux, process]
 {% include JB/setup %}
 
 
-# Linux 系统中僵尸进程 #
-
 Linux 系统中僵尸进程和现实中僵尸（虽然我也没见过）类似，虽然已经死了，但是由于没人给它们收尸，还能四处走动。僵尸进程指的是那些虽然已经终止的进程，但仍然保留一些信息，等待其父进程为其收尸。配图源自 [Flickr](http://www.flickr.com/photos/dhollister/2596483147/) 
 ![2596483147_58d6bae3b1_z](https://f.cloud.github.com/assets/3265880/1352596/ab904876-3739-11e3-87dd-1faa6e8e42de.jpg)
 
@@ -19,7 +17,7 @@ Linux 系统中僵尸进程和现实中僵尸（虽然我也没见过）类似�
 
 一个进程终止的方法很多，进程终止后有些信息对于父进程和内核还是很有用的，例如进程的ID号、进程的退出状态、进程运行的CPU时间等。因此进程在终止时，回收所有内核分配给它的内存、关闭它打开的所有文件等等，但是还会保留以上极少的信息，以供父进程使用。父进程可以使用 wait/waitpid 等系统调用来为子进程收拾，做一些收尾工作。
 
-因此，一个僵尸进程产生的过程是：父进程调用fork创建子进程后，子进程运行直至其终止，它立即从内存中移除，但进程描述符仍然保留在内存中（进程描述符占有极少的内存空间）。子进程的状态变成`EXIT_ZOMBIE`，并且向父进程发送 **SIGCHLD** 信号，父进程此时应该调用 `wait()` 系统调用来获取子进程的退出状态以及其它的信息。在 wait 调用之后，僵尸进程就完全从内存中移除。因此一个僵尸存在于其终止到父进程调用 wait 等函数这个时间的间隙，一般很快就消失，但如果编程不合理，父进程从不调用 wait 等系统调用来收集僵尸进程，那么这些进程会一直存在内存中。
+因此，一个僵尸进程产生的过程是：父进程调用fork创建子进程后，子进程运行直至其终止，它立即从内存中移除，但进程描述符仍然保留在内存中（进程描述符占有极少的内存空间）。子进程的状态变成 `EXIT_ZOMBIE`，并且向父进程发送 **SIGCHLD** 信号，父进程此时应该调用 `wait()` 系统调用来获取子进程的退出状态以及其它的信息。在 wait 调用之后，僵尸进程就完全从内存中移除。因此一个僵尸存在于其终止到父进程调用 wait 等函数这个时间的间隙，一般很快就消失，但如果编程不合理，父进程从不调用 wait 等系统调用来收集僵尸进程，那么这些进程会一直存在内存中。
 
 在 Linux 下，我们可以使用 ps 等命令查看系统中僵尸进程，僵尸进程的状态标记为‘Z’：
 ![screenshot from 2013-10-17 22 36 17](https://f.cloud.github.com/assets/3265880/1352587/8c728030-3739-11e3-8424-d898bc393538.png)
@@ -140,6 +138,6 @@ int main()
 
 ## 参考资料 ##
 
-* http://en.wikipedia.org/wiki/Zombie_process
-* http://simplestcodings.blogspot.com/2010/10/story-of-zombie-process.html
-* http://www.howtogeek.com/119815/
+* [http://en.wikipedia.org/wiki/Zombie_process](http://en.wikipedia.org/wiki/Zombie_process)
+* [http://simplestcodings.blogspot.com/2010/10/story-of-zombie-process.html](http://simplestcodings.blogspot.com/2010/10/story-of-zombie-process.html)
+* [http://www.howtogeek.com/119815/](http://www.howtogeek.com/119815/)
