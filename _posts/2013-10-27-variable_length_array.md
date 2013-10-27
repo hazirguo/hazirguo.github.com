@@ -40,9 +40,9 @@ int array3[n]; 		//invalid
 
 {% highlight c %}
 extern int n;
-int A[n]; 							// invalid: ?le scope VLA
-extern int (*p2)[n]; 				// invalid: ?le scope VM
-int B[100]; 						// valid: ?le scope but not VM
+int A[n]; 							// invalid: file scope VLA
+extern int (*p2)[n]; 				// invalid: file scope VM
+int B[100]; 						// valid: file scope but not VM
 void fvla(int m, int C[m][m]); 		// valid: VLA with prototype scope
 void fvla(int m, int C[m][m]) 		// valid: adjusted to auto pointer to VLA
 {
@@ -57,7 +57,7 @@ void fvla(int m, int C[m][m]) 		// valid: adjusted to auto pointer to VLA
 	int (*s)[m]; 					// valid: auto pointer to VLA
 	extern int (*r)[m]; 			// invalid: r has linkage and points to VLA
 	static int (*q)[m] = &B; 		// valid: q is a static block pointer to VLA
-	}
+}
 {% endhighlight %}
 至于上面语法的原因，请参考 [ISO/IEC9899](http://busybox.net/~landley/c99-draft.html) 。
 
@@ -77,7 +77,7 @@ thisline->length = this_length;
 
 从上例就可以看出，零长数组在有固定头部的可变对象上非常适用，我们可以根据对象的大小动态地去分配结构体的大小。
 
-在 Linux 内核中也有这种应用，例如由于 [PID 命名空间的存在](http://www.cnblogs.com/hazir/p/linux_kernel_pid.html)，每个进程 PID 需要映射到所有能看到其的命名空间上，但该进程所在的命名空间在开始并不确定（但至少为 init 命名空间），需要在运行是根据 level 的值来确定，所以在该结构体后面增加了一个长度为 1 的数组（因为至少在一个init命名空间上），使得该结构体 pid 是个可变长的结构体，在运行时根据进程所处的命名空间的 level 来决定 numbers 分配多大。（*注：虽然不是零长度的数组，但用法是一样的*）
+在 Linux 内核中也有这种应用，例如由于 [PID 命名空间的存在](http://hazirguo.github.io/kernel/2013/10/03/linux_kernel_pid/)，每个进程 PID 需要映射到所有能看到其的命名空间上，但该进程所在的命名空间在开始并不确定（但至少为 init 命名空间），需要在运行是根据 level 的值来确定，所以在该结构体后面增加了一个长度为 1 的数组（因为至少在一个init命名空间上），使得该结构体 pid 是个可变长的结构体，在运行时根据进程所处的命名空间的 level 来决定 numbers 分配多大。（*注：虽然不是零长度的数组，但用法是一样的*）
 
 {% highlight c %}
 struct pid
