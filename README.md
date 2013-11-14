@@ -44,3 +44,7 @@ The master and gh-pages branch do not share the same ancestry. Please treat them
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/hazirguo/hazirguo.github.com/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
