@@ -40,6 +40,7 @@ squashfs               35834  0
 
 ### 3. modinfo -- 显示模块的信息
 **`modinfo`** 命令用来显示内核模块的信息：
+
 ```
 # modinfo /lib/modules/3.5.0-19-generic/kernel/fs/squashfs/squashfs.ko
 
@@ -54,6 +55,7 @@ vermagic:       3.5.0-19-generic SMP mod_unload modversions 686
 ```
 ### 4. rmmod -- 从内核中删除模块
 **`rmmod`** 命令从内核中移除模块，你可以移除已经加载到内核中的模块：
+
 ```
 # rmmod squashfs.ko
 ```
@@ -65,12 +67,14 @@ vermagic:       3.5.0-19-generic SMP mod_unload modversions 686
 
 ### 1. 安装 Linux headers
 首先你需要安装 `linux-headers-...`，根据你的发行版选择使用 apt-get 或者 yum:
+
 ```
 # apt-get install build-essential linux-headers-$(uname -r)
 ```
 
 ### 2. Hello World 模块源代码
 接下来用 C 语言创建模块的源代码 hello.c：
+
 ``` c
 #include <linux/module.h>    // included for all kernel modules
 #include <linux/kernel.h>    // included for KERN_INFO
@@ -94,10 +98,12 @@ static void __exit hello_cleanup(void)
 module_init(hello_init);
 module_exit(hello_cleanup);
 ```
+
 **警告：** 所有内核模块将会在高特权级别的内核空间操作，所以写内核模块时你需要特别小心！
 
 ### 3. 创建编译内核模块的 Makefile
 下面的 makefile 文件可以用来编译成 hello world 内核模块：
+
 ```
 obj-m += hello.o
 
@@ -108,6 +114,7 @@ clean:
     make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
 ```
 使用 make 命令来编译模块：
+
 ```
 # make
 
@@ -124,6 +131,7 @@ make[1]: Leaving directory `/usr/src/linux-headers-3.5.0-19-generic'
 
 ### 4. 插入或删除示例内核模块
 现在我们有了 hello.ko 文件，我们可以使用 insmod 命令将该模块插入到内核：
+
 ```
 # insmod hello.ko
 
@@ -135,6 +143,7 @@ make[1]: Leaving directory `/usr/src/linux-headers-3.5.0-19-generic'
 # dmesg | tail -1
 [ 8707.989819] Cleaning up module.
 ```
+
 当模块被加载到内核中时，module_init 宏被触发，将会调用 hello_init 函数。类似的，当使用 rmmod 命令来移除模块时， module_exit 宏被触发，调用 hello_exit 函数。使用 dmesg 命令，可以查看示例内核模块的输出。
 
 注意 printk 是定义在内核中的函数，它的用法与 IO 库函数 printf 相似，但在内核中不能使用任何库函数。
