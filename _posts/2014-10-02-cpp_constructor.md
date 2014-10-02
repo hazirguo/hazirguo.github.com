@@ -10,7 +10,7 @@ tags: []
 
 朋友某天在 QQ 上问我一道 C++ 的题目：
 
-```
+``` cpp
 class A
 {
 public:
@@ -56,7 +56,7 @@ int main()
 
 默认构造函数是指用户在定义一个类时，但并没有显示地定义构造函数，那么编译器会隐式地合成一个构造函数，该默认构造函数会为你完成类成员的构造。如我定义了一个类，该类有三个数据成员，分别为 int 型、string 型、vector 型：
 
-```
+``` cpp
 class A {
 private:
 	int 			var_int;
@@ -75,7 +75,7 @@ A a;
 
 这里如果我们想在构造 A 的对象时，可以初始化 A 对象成员，就需要自定义构造函数，我们先看看一个典型的构造函数的模样：
 
-``` 
+``` cpp
 className (parameters list) : initializer list
 {
 	constructor body
@@ -86,7 +86,7 @@ className (parameters list) : initializer list
 
 如上面例子，如果在定义 A 的对象时需要初始化 A 的成员 var_int 为 42，var_str 为 "helloworld"，有两种自定义构造函数（但这两种构造函数不能同时出现）：
 
-```
+``` cpp
 class A {
 public:
 	//method 1
@@ -115,7 +115,7 @@ A a;
 
 解释了这么多，再回头看看开始的题目，定义了两个对象 A 和 B：
 
-```
+``` cpp
     A a;
     B b(a);
 ```
@@ -128,7 +128,7 @@ A a;
 
 **1. 在类 A 中添加一个自定义的拷贝构造函数：**
 
-```
+``` cpp
 A(const A &a)
 {
 	cout << "copy A";
@@ -139,7 +139,7 @@ A(const A &a)
 
 **2.将类 B 的构造函数改成赋值 _a：**
 
-```
+``` cpp
 B(const A &a)
 {
 	_a = a;
@@ -151,7 +151,7 @@ B(const A &a)
 
 **3.在 2 的基础上在类 A 中添加赋值操作符函数：**
 
-```
+``` cpp
 A &operator = (const A &a)
 {
 	cout << "assign A";
