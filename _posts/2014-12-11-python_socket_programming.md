@@ -28,7 +28,7 @@ import socket   #for sockets
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
  
 print 'Socket Created'
-```
+{% endhighlight %}
 
 函数 `socket.socket` 创建一个 socket，返回该 socket 的描述符，将在后面相关函数中使用。该函数带有两个参数：
 
@@ -42,7 +42,7 @@ print 'Socket Created'
 
 如果创建 socket 函数失败，会抛出一个 `socket.error` 的异常，需要捕获：
 
-``` python
+{% highlight python %}
 #handling errors in python socket programs
  
 import socket   #for sockets
@@ -56,7 +56,7 @@ except socket.error, msg:
     sys.exit();
  
 print 'Socket Created'
-```
+{% endhighlight %}
 
 那么到目前为止已成功创建了 socket，接下来我们将用这个 socket 来连接某个服务器，就连 www.google.com 吧。
 
@@ -81,7 +81,7 @@ except socket.gaierror:
     sys.exit()
      
 print 'Ip address of ' + host + ' is ' + remote_ip
-```
+{% endhighlight %}
 
 现在我们知道了服务器的 IP 地址，就可以使用连接函数 `connect` 连接到该 IP 的某个特定的端口上了，下面例子连接到 80 端口上（是 HTTP 服务的默认端口）：
 
@@ -90,16 +90,16 @@ print 'Ip address of ' + host + ' is ' + remote_ip
 s.connect((remote_ip , port))
  
 print 'Socket Connected to ' + host + ' on ip ' + remote_ip
-```
+{% endhighlight %}
 
 运行该程序：
 
-``` bash
+{% highlight bash %}
 $ python client.py
 Socket created
 Ip of remote host www.google.com is 173.194.38.145
 Socket Connected to www.google.com on ip 173.194.38.145
-```
+{% endhighlight %}
 
 ### 发送数据
 
@@ -118,7 +118,7 @@ except socket.error:
     sys.exit()
  
 print 'Message send successfully'
-```
+{% endhighlight %}
 
 发送完数据之后，客户端还需要接受服务器的响应。
 
@@ -131,12 +131,11 @@ print 'Message send successfully'
 reply = s.recv(4096)
  
 print reply
-```
+{% endhighlight %}
 
 一起运行的结果如下：
 
-
-``` bash
+{% highlight bash %}
 Socket created
 Ip of remote host www.google.com is 173.194.38.145
 Socket Connected to www.google.com on ip 173.194.38.145
@@ -156,7 +155,7 @@ Alternate-Protocol: 80:quic,p=0.02
 The document has moved
 <A HREF="http://www.google.com.sg/?gfe_rd=cr&ei=PlqJVLCREovW8gfF0oG4CQ">here</A>.
 </BODY></HTML>
-```
+{% endhighlight %}
 
 ### 关闭 socket
 
@@ -164,7 +163,7 @@ The document has moved
 
 {% highlight python %}
 s.close()
-```
+{% endhighlight %}
 
 ### 小结
 
@@ -225,7 +224,7 @@ print 'Socket bind complete'
 
 函数 `listen` 可以将 socket 置于监听模式：
 
-``` python
+{% highlight bash %}
 s.listen(10)
 print 'Socket now listening'
 {% endhighlight %}
