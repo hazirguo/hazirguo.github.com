@@ -287,3 +287,8 @@ Connected to remote host. Start sending messages
 2. 客户端代码还有个缺陷是，当某个客户端在输入消息但还未发送出去时，服务器也发送消息过来，这样会冲刷掉客户端正在输入的消息。这目前来看没办法解决的，唯一的解决方法是使用像 ncurses 终端库使用户输入和输出独立开，或者写一个 GUI 的程序。
 
 那么本文通过一个聊天室的范例进一步学习了 Python 下 Socket 编程。
+
+## 参考文献
+
+* [Python socket – chat server and client with code example](http://www.binarytides.com/code-chat-application-server-client-sockets-python/)
+* [Sockets programming in Python](http://www.ibm.com/developerworks/linux/tutorials/l-pysocks/)
