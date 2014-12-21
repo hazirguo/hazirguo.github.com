@@ -52,7 +52,7 @@ var = 10
 
 下图可以反应两者的区别：
 
-![image](http://)
+![static-dynamic-typed-language](http://upload-images.jianshu.io/upload_images/13017-d7e2288a561238eb.png?imageView2/2/w/1240/q/100)
 
 
 由上可以看出 Java、C/C++、C# 等属于静态类型编程语言，而 Python、PHP、Perl 等属于动态类型语言。
