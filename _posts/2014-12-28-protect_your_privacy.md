@@ -2,7 +2,7 @@
 layout: post
 title: "从12306帐号泄漏谈信息安全"
 description: ""
-category: tech_talk 
+category: TechTalk 
 tags: [hash, security]
 ---
 {% include JB/setup %}
