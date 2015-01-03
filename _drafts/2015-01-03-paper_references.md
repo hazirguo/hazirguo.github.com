@@ -2,8 +2,9 @@
 layout: post
 title: "毕业设计阅读论文集"
 description: ""
-category: reading 
+category: paper 
 tags: [paper, mcos, reading]
+published: false
 ---
 {% include JB/setup %}
 
