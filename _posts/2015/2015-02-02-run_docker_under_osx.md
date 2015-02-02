@@ -43,6 +43,26 @@ $ docker run hello-world
 这会下载 `hello-world` 镜像，然后创建一个小的容器，在容器中执行程序打印 `Hello from Docker.` 简短的信息。
 
 
+## 原理
+
+我们分析 Mac 下安装 Docker 的原理，下面是整体框架图：
+
+![](../../images/docker-install.png)
+
+如图所示，安装完成后，具体情况如下：
+
+* 在 Mac OS X 的 home 目录 `~/.boot2docker` 下创建了虚拟机所需要的文件，其中 `boot2docker.iso` 是虚拟机映像，这是一个由 CD-ROM 引导的 TinyCoreLinux 系统；在 `~/.VirtualBox VMS/boot2docker-vm` 目录下存在  `boot2docker-vm.vmdk` 文件则是你的虚拟机磁盘，你所有的持久化数据都存放在这里，包括docker创建的lxc容器等文件。
+* 在 Mac OS X 下，docker 被分为客户端 docker-client 和服务端 docker-daemon 两部分，而在 Linux（比如ubuntu）下，实际上则是同一个可执行文件同时充当客户端和服务端。docker-daemon 可以监听 unix scoket 或者 tcp socket（默认端口为4234），docker-client 会通过一个叫 **DOCKER_HOST** 的环境变量读取服务地址和端口，因此在启动时会提示你设置该环境变量。
+*  docker-daemon 跑在虚拟机上，这个程序实际上就是接收docker-client 发送过来的消息命令，创建、启动和销毁 Docker 容器，以及 Docker 本身的版本管理、映像存储等等。
+
+
+## 参考文献：
+
+* [Installing Docker on Mac OS X--Docker Docs](https://docs.docker.com/installation/mac/)
+* [利用Docker构建开发环境--UC技术博客](http://tech.uc.cn/?p=2726)
+
+
+
 
 
 
