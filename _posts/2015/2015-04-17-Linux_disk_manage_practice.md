@@ -11,7 +11,7 @@ tags: [linux, command]
 
 研一的小伙伴向我反应实验室的 Confluence 知识管理系统上传不了附件，经过排查发现是磁盘空间不足了，使用 **`df`** 命令查看磁盘使用量如下图：
 
-![](http://i.imgur.com/oVAvOPS.png)
+![](../../images/disk_info.png)
 
 实验室的文件服务器有三块硬盘，分别为 250GB、1TB、1TB，对应的设备文件名分别为 `/dev/sda1`、`/dev/sda2`、`/dev/sda3`，但图中看到只有两块硬盘的信息，是因为第二块磁盘作为物理的 RAID1 备份第三块磁盘。
 
@@ -57,7 +57,7 @@ umount: /home: device is busy.
 
 再完成卸载即可。现在可以调整该分区的大小，有两种方法：一种是使用命令行命令来操作，另一种是使用图形化的软件 GParted。其实图形化软件也是调用 Linux 的命令来实现的，这里为了简便我就安装了 GParted，使用该软件完成调整分区的大小（该软件操作很简单，就不多说），如下图：
 
-![](http://i.imgur.com/w7lrvmi.png)
+![](../../images/gparted.png)
 
 将 `/dev/sdc1` 调整到近 420GB。
 
