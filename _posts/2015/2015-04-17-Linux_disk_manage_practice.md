@@ -13,7 +13,7 @@ tags: [linux, command]
 
 ![](../../images/disk_info.png)
 
-实验室的文件服务器有三块硬盘，分别为 250GB、1TB、1TB，对应的设备文件名分别为 `/dev/sda1`、`/dev/sda2`、`/dev/sda3`，但图中看到只有两块硬盘的信息，是因为第二块磁盘作为物理的 RAID1 备份第三块磁盘。
+实验室的文件服务器有三块硬盘，分别为 250GB、1TB、1TB，对应的设备文件名分别为 `/dev/sda`、`/dev/sdb`、`/dev/sdc`，但图中看到只有两块硬盘的信息，是因为第二块磁盘作为物理的 RAID1 备份第三块磁盘。
 
 现在文件系统的挂载信息如下：
 
@@ -59,7 +59,11 @@ umount: /home: device is busy.
 
 ![](../../images/gparted.png)
 
-将 `/dev/sdc1` 调整到近 420GB。
+将 `/dev/sdc1` 调整到近 420GB。最后别忘了通过命令 **`mount`** 将 `/dev/sdc1` 重新挂载到 `/home` 目录下，否则访问 `/home` 目录下的文件就自动去 `/dev/sda2` 磁盘分区下寻找：
+
+```
+[root@archlab-server2 /]# mount /dev/sdc1 /home
+```
 
 
 ## 新增分区
