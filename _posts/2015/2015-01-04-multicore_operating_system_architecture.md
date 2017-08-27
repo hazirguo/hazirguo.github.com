@@ -1,4 +1,12 @@
-# 多核嵌入式操作系统架构
+---
+layout: post
+title: "多核嵌入式操作系统架构"
+description: ""
+category: 技术闲话
+tags: [plan, todo]
+published: false
+---
+
 
 操作系统如何支持支持多核芯片的多处理模式？主要有三种多处理模式：
 
@@ -16,22 +24,3 @@
 
 
 http://www.vsharing.com/k/2007-1/621630.html
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

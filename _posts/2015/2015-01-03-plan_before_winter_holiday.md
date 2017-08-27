@@ -2,11 +2,10 @@
 layout: post
 title: "寒假前工作规划"
 description: ""
-category: plan 
-tags: [plan, todo, paper]
+category: 技术闲话
+tags: [plan, todo]
 published: true
 ---
-{% include JB/setup %} 
 
 
 距离寒假还有差不多一个月零一个星期，时间很宝贵，如何利用好这段时间关系到下学期能否在压力中度过。这段时间可以大体划分为三个阶段：
@@ -18,4 +17,3 @@ published: true
 具体安排参见下图，打感叹号的为第一周要着手完成的工作：
 
 ![](../../images/plans_before_winter_holiday.svg)
-

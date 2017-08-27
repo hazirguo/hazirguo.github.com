@@ -2,10 +2,10 @@
 layout: post
 title: "最小 Docker 镜像 hello-world 剖析"
 description: ""
-category: docker 
+category: Docker
 tags: [docker, dockerfile]
 ---
-{% include JB/setup %} 
+
 
 开始学习 Docker 的同学基本上都是按照官方的 guide 来安装，之后要测试是否已经安装成功，官方会让你 pull 一个 hello-world 示例镜像下来并运行，如下命令：
 
@@ -158,4 +158,3 @@ filesize equ $ - $$
 也比较简单，就调用了两个系统调用，`sys_write` 向标准输出打印一段信息，`sys_exit` 退出程序。
 
 至此，我们分析完了官方提供的 `hello-world` 镜像整个构建及运行过程，麻雀虽小，五脏俱全，理解最小的 Docker 镜像的工作机制对我们理解 Docker 有很大帮助。
-

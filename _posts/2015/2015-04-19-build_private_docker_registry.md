@@ -2,10 +2,10 @@
 layout: post
 title: "搭建私有 Docker 仓库服务器"
 description: ""
-category: docker
-tags: [docker,registry]
+category: Docker
+tags: [docker, registry]
 ---
-{% include JB/setup %}
+
 
 [Docker Hub](https://hub.docker.com) 是 Docker 官方的公共仓库服务器，用户在 DockerHub 上只能创建一个私有仓库，这对于有些用户是不够用的，而且 DockerHub 服务器的访问速度也是个很大问题，那么我们希望能在自己本地的服务器上创建一个类似于 DockerHub 仓库服务器供团队使用，这也是可以的。
 
@@ -124,10 +124,3 @@ Status: Downloaded newer image for 192.168.59.104:5000/hello-world:latest
 ----
 
 **参考资料：** http://dockerpool.com/static/books/docker_practice/repository/local_repo.html
-
-
-
-
-
-
-

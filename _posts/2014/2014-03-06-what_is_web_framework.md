@@ -2,11 +2,9 @@
 layout: post
 title: "【译】Web 框架是什么？"
 description: ""
-category: web 
-tags: [web, framework, django]
+category: 技术闲话
+tags: [web, framework, django, translation]
 ---
-{% include JB/setup %}
-
 
 
 Web 应用框架，或者简单的说是“Web 框架”，其实是建立 web 应用的一种方式。从简单的博客系统到复杂的富 AJAX 应用，web 上每个页面都是通过写代码来生成的。我发现很多人都热衷于学习 web 框架技术，例如 Flask 或这 Django 之类的，但是很多人并不理解什么是 web 框架，或者它们是如何工作的。这篇文章中，我将探索反复被忽略的 web 框架基础的话题。阅读完这篇文章，你应该首先对什么是 web 框架以及它们为什么会存在有更深的认识。这会让你学习一个新的 web 框架变得简单的多，还会让你在使用不同的框架的时候做个明知的选择。
@@ -53,7 +51,7 @@ POST 请求仍然会发送一个特殊的 URL，这个 URL 可能和提交数据
 
 下面是程序的代码：
 
-{% highlight python %} 
+{% highlight python %}
 import socket
 HOST = ''
 PORT = 80
@@ -70,7 +68,7 @@ Content-type: text/html
     </body>
 </html>""")
 connection.close()
-{% endhighlight %} 
+{% endhighlight %}
 
 （如果上面的代码不工作，试着将 PORT 改为类似 8080 这样的端口。）
 
@@ -125,7 +123,7 @@ Flask 采取了一点不同的方法。将一个函数和请求的 URL 关联起
 @app.route('/users/<id:int>/')
 def display_user(id):
     # ...
-{% endhighlight %} 
+{% endhighlight %}
 
 就像你看到的这样，装饰器使用几乎最简单的正则表达式的形式来将 URL 映射到参数。通过传递给 `route()` 的 URL 中包含的 `<name:type>` 指令，可以提取到参数。路由像 `/info/about_us.html` 这样的静态 URL，可以像你预想的这样 `@app.route('/info/about_us.html')` 处理。
 
@@ -153,46 +151,3 @@ Django 有着“功能齐全”的设计哲学，其中包含了一个 ORM(**O**
 
 
 文章来源于：[http://www.jeffknupp.com/blog/2014/03/03/what-is-a-web-framework/](http://www.jeffknupp.com/blog/2014/03/03/what-is-a-web-framework/)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

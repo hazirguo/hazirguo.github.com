@@ -2,10 +2,9 @@
 layout: post
 title: "例解 Linux cd 命令"
 description: ""
-category: linux 
-tags: [linux, command, cd]
+category: Linux基础
+tags: [Linux, command, cd]
 ---
-{% include JB/setup %}
 
 **cd** 命令是 *nix 系统中最基本的命令，它所做的事情是改变你当前所在的目录。本文详细介绍该命令，它所能完成的功能以及关于该命令内在的东西。
 

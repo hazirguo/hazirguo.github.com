@@ -2,11 +2,9 @@
 layout: post
 title: "Mac 下两款 Markdown 编辑器 Mou/MacDown 大 PK"
 description: ""
-category: tools 
-tags: [markdown, mac]
+category: 技术闲话
+tags: [markdown, mac, tools]
 ---
-{% include JB/setup %} 
-
 
 [Mou](http://25.io/mou/) 和 [MacDown](http://macdown.uranusjr.com/) 是我在 Mac 下用过的两款优秀的 Markdown 编辑器。之前一直使用的是 Mou，但不知怎的最近 Mou 在保存时总有 4s 以上的卡顿，这让我很不爽，没找到有效的解决方法，于是我被迫去寻找其它的 MD 编辑器。我尝试过很多种，但总觉得没有 Mou 体验好，最终让我找到了 MacDown——OS X下开放源代码 Markdown 编辑器。
 
@@ -26,7 +24,7 @@ MacDown 作者 Chung 在征得 Mou 作者 Luo 的同意使用了 Mou 的几款�
 
 比较详细的情节可以参见 Chung 的[博客](http://macdown.uranusjr.com/blog/post/5/show-hn-macdown/)。至于 MacDown 和 Mou 的关系是怎样的，是不是 MacDown 就是不道德地克隆了 Mou 呢？这个每个人都有自己的看法，这里就不讨论了。
 
-欣喜的是，目前两款软件都找到自己的发展模式，Mou 已经完成了众筹，即将发布 1.0 版本，如果有对 Mou 有情怀的同学可以[支持](http://25.io/mou/store/)作者；MacDown 依旧会走自己开源的道路。 
+欣喜的是，目前两款软件都找到自己的发展模式，Mou 已经完成了众筹，即将发布 1.0 版本，如果有对 Mou 有情怀的同学可以[支持](http://25.io/mou/store/)作者；MacDown 依旧会走自己开源的道路。
 
 Chung 的一句话也道出了我的心声：
 
@@ -41,7 +39,7 @@ Chung 的一句话也道出了我的心声：
 * 提供丰富的渲染 Markdown 之后的 CSS 样式，同时支持自定义样式
 * 英文单词的自动补全功能，按下 `Esc` 键列出补全的列表
 * 字符、单词统计功能
-* 支持 
+* 支持
 * TeX 数学公式的支持
 * 支持导出 HTML 和 PDF 两种格式
 * 便捷的快捷键操作
@@ -85,6 +83,3 @@ MacDown 支持 [Task list]()，有了这个功能，你可以将你的 MD 编辑
 ## 总结
 
 OK，总结完了，如果不是 Mou 在我的 Mac 上有卡顿，我也没想着要换一款编辑器，目前我在用 MacDown 感觉还是很不错的，因为有代码高亮支持就足以把我留下了。至于你选哪一款，你可以下载下来自己体验体验，反正软件都很小。也许你跟我一样，因为某个小瑕疵放弃某个软件，又因为某个小功能的惊喜而喜欢上某个软件。
-
-
-

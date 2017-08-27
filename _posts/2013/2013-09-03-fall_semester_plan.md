@@ -2,10 +2,11 @@
 layout: post
 title: "研二上学期计划"
 description: ""
-category: plan 
+category: plan
 tags: [plan]
+published: false
 ---
-{% include JB/setup %}
+
 
 ##目标
 * 阅读 Linux 内核，做到深入理解内核。阅读内核首先要做到的是能理解其工作原理，其次从内核代码的层次上找到其对应的代码，最后回归到应用程序去尝试使用。

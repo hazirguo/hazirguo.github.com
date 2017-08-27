@@ -2,10 +2,10 @@
 layout: post
 title: "破解 Windows 平台下Markdown 编辑器 MarkdownPad2"
 description: ""
-category: miscellaneous
-tags: [markdown]
+category: 技术闲话
+tags: [markdown, tools]
 ---
-{% include JB/setup %}
+
 
 MarkdownPad 是 Windows 平台下一款优秀的 Markdown 编辑器，本文简单介绍 Markdown 以及使用一种方法破解 MarkdownPad 使其升级到专业版。该方法仅限于教育用途，我不为滥用该方法导致的商业纠纷负责！
 
@@ -72,5 +72,3 @@ Markdown 是一种轻量级标记语言，有着及其简单、易学易用的�
 
 ## 再次声明
 文章中方法来源于[该博客](http://iamjuza.blogspot.com/2013/09/unlocking-markdownpad-2.html)，只限于学习用途，如需使用还[**请支持正版**](https://markdownpad.com/buy.html)!
- 
- 

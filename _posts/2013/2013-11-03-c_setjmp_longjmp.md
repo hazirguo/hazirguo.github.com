@@ -2,11 +2,9 @@
 layout: post
 title: "C 语言中 setjmp 和 longjmp"
 description: ""
-category: c_cplusplus 
-tags: [c, setjmp, longjmp]
---- 
-{% include JB/setup %}
-
+category:  编程语言
+tags: [c_cplusplus, setjmp, longjmp]
+---
 
 在 C 语言中，我们不能使用 **goto** 语句来跳转到另一个函数中的某个 **label** 处；但提供了两个函数——**setjmp** 和 **longjmp** 来完成这种类型的分支跳转。后面我们会看到这两个函数在处理异常上面的非常有用。
 
@@ -71,14 +69,14 @@ longjmp 函数的功能是从 jmp_buf 结构体中恢复由 setjmp 函数保存�
 ![setjmp longjmp](https://f.cloud.github.com/assets/3265880/1460659/19d4db44-445a-11e3-8468-aab15a080f57.png)
 
 运行该程序得到的结果为：
-{% highlight c %} 
+{% highlight c %}
 i = 0
 i = 2
 {% endhighlight %}
 
 ## C 语言异常处理
 Java、C# 等面向对象语言中都有异常处理的机制，如下就是典型的 Java 中异常处理的代码，两个数相除，如果被除数为0抛出异常，在函数 f() 中可以获取该异常并进行处理：
-{% highlight java %} 
+{% highlight java %}
 double divide(double to, double by) throws Bad {
 	if(by == 0)
 		throw new Bad ("Cannot / 0");
@@ -88,7 +86,7 @@ double divide(double to, double by) throws Bad {
 void f() {
 	try {
 		divide(2, 0);
-		//...	
+		//...
 	} catch (Bad e) {
 		print(e.getMessage());
 	}
@@ -108,7 +106,7 @@ double divide(double to, double by)
 	return to / by;
 }
 
-void f() 
+void f()
 {
 	if (setjmp(env) == 0)
 		divide(2, 0);

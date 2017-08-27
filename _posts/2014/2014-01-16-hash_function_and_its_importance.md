@@ -2,12 +2,9 @@
 layout: post
 title: "Hash 函数及其重要性"
 description: ""
-category: translation 
-tags: [python, hash, cryptology]
+category: 技术闲话
+tags: [python, hash, cryptology, translation]
 ---
-{% include JB/setup %}
-
-
 
 不时会爆出网站的服务器和数据库被盗取，考虑到这点，就要确保用户一些敏感数据（例如密码）的安全性。今天，我们要学的是 hash 背后的基础知识，以及如何用它来保护你的 web 应用的密码。
 
@@ -28,9 +25,9 @@ Hashing 将一段数据（无论长还是短）转成相对较短的一段数据
 
 {% highlight python %}
 import hashlib
- 
+
 data = "Hello World"
- 
+
 h = hashlib.md5()
 h.update(data)
 print(h.hexdigest())
@@ -76,7 +73,7 @@ print(result) #323322056
 
 {% highlight python %}
 import binascii,base64
- 
+
 i = 0
 while True:
     if binascii.crc32(base64.encodestring(bytes(i,))) == 323322056:
@@ -90,10 +87,10 @@ while True:
 
 {% highlight python %}
 import binascii
- 
+
 print(binascii.crc32("supersecretpassword"))
 #323322056
- 
+
 print(binascii.crc32("MTIxMjY5MTAwNg=="))
 #323322056
 {% endhighlight %}
@@ -129,14 +126,14 @@ print(binascii.crc32("MTIxMjY5MTAwNg=="))
 
 {% highlight python %}
 import hashlib
- 
+
 password = "EasyPassword"
- 
+
 print(hashlib.sha1(password).hexdigest())
 # ff166c2477f864d609ca8111680bfa387eb4e509
- 
+
 salt = "f#@V)Hu^%Hgfds"
- 
+
 print(hashlib.sha1(salt + password).hexdigest())
 # 3e7edaceb96becaf69ae7e73073812ea136188e2
 {% endhighlight %}
@@ -169,10 +166,10 @@ hashlib.sha1(userid + password).hexdigest()
 
 {% highlight python %}
 import hashlib, os
- 
+
 def unique_salt():
     return hashlib.sha1(os.urandom(10)).hexdigest()[:22]
- 
+
 salt = unique_salt()
 password = "" # str or int
 hash = hashlib.sha1(salt + str(password)).hexdigest()
@@ -212,14 +209,14 @@ print(hash)
 
 {% highlight python %}
 import hashlib
- 
+
 def my_hash(password, salt):
     hash = hashlib.sha1(salt + password).hexdigest()
- 
+
     for i in range(1000):
         hash = hashlib.sha1(hash).hexdigest()
     return hash
- 
+
 print(my_hash("12345", "f#@V)Hu^%Hgfds"))
 {% endhighlight %}
 
@@ -227,10 +224,10 @@ print(my_hash("12345", "f#@V)Hu^%Hgfds"))
 
 {% highlight python %}
 import bcrypt
- 
+
 def my_hash(password):
     return bcrypt.hashpw(password, bcrypt.gensalt(10))
- 
+
 print(my_hash("atdk"))
 #$2a$10$WNhGOdVhoZrrKgwxGa2VIuzfAvm9oFWZF9PIVtLIoU5LQOVGLuLrq
 {% endhighlight %}
@@ -244,15 +241,15 @@ print(my_hash("atdk"))
 
 {% highlight python %}
 import bcrypt, os, hashlib
- 
+
 def my_hash(password, unique_salt):
     return bcrypt.hashpw(password, bcrypt.gensalt(10) + unique_salt)
- 
+
 def unique_salt():
     return hashlib.sha1(os.urandom(10)).hexdigest()[:22]
- 
+
 password = "verysecret"
- 
+
 print(my_hash(password, unique_salt()))
 # $2a$10$aHx0q.FE/tGvGWzlm6yePemYx9SAsBP2iSiy/uFx7pyjpy980Hita
 {% endhighlight %}
@@ -261,18 +258,18 @@ print(my_hash(password, unique_salt()))
 
 {% highlight python %}
 import bcrypt, os, hashlib
- 
+
 # assume this was pulled from the database
 hash = "$2a$10$6XDaX/3kNby0jI9Ih/Re7.478DOMZK9OnA2mTxKUP0My.39N.jdky"
- 
+
 # assume this is the password the user entered to log back in
 password = "verysecret"
- 
+
 def check_password(hash, password):
     salt = hash[:29]
     new_hash = bcrypt.hashpw(password, salt)
     return hash == new_hash
- 
+
 if check_password(hash, password):
     print("Access Granted")
 else:
@@ -287,24 +284,24 @@ else:
 
 {% highlight python %}
 import bcrypt, os, hashlib
- 
+
 class PassHash():
     def unique_salt(self):
         return hashlib.sha1(os.urandom(10)).hexdigest()[:22]
- 
+
     def hash(self, password):
         return bcrypt.hashpw(password, bcrypt.gensalt(10) + self.unique_salt())
- 
+
     def check_password(self, hash, password):
         full_salt = hash[:29]
         new_hash = bcrypt.hashpw(password, full_salt)
         return hash == new_hash
- 
+
 obj = PassHash()
- 
+
 a = obj.hash("12345")
 print(a) # $2a$10$gBSbmXKanQJOTSabtX4wfOE2RT2mKDFbCY6r7cqCJSk2YPGjIDrou
- 
+
 b = obj.check_password(a, "12345")
 print(b) # True
 {% endhighlight %}

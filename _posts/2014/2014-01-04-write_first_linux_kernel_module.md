@@ -2,11 +2,9 @@
 layout: post
 title: "写自己的第一个 Linux 内核模块"
 description: ""
-category: linux 
-tags: [linux, kernel, module]
+category: Linux内核
+tags: [Linux, kernel, module]
 ---
-{% include JB/setup %}
-
 
 什么是内核模块？内核模块是一段可以在内核需要的时候加载或者删除的代码。大多数驱动以内核模块的形式提供，当这些驱动不需要的时候，我们可以去掉这些特定的驱动，这会有效地减小内核镜像的大小。
 
@@ -22,12 +20,12 @@ tags: [linux, kernel, module]
 ```
 # lsmod
 Module                  Size  Used by
-ppp_deflate            12806  0 
+ppp_deflate            12806  0
 zlib_deflate           26445  1 ppp_deflate
-bsd_comp               12785  0 
+bsd_comp               12785  0
 ..
 ```
-  
+
 ### 2. insmod -- 插入模块到内核
 **`insmod`** 命令用来插入一个新的模块到内核中：
 
@@ -46,7 +44,7 @@ squashfs               35834  0
 
 filename:       /lib/modules/3.5.0-19-generic/kernel/fs/squashfs/squashfs.ko
 license:        GPL
-author:         Phillip Lougher 
+author:         Phillip Lougher
 description:    squashfs 4.0, a compressed read-only filesystem
 srcversion:     89B46A0667BD5F2494C4C72
 depends:        

@@ -2,10 +2,9 @@
 layout: post
 title: "Linux 内核进程管理之进程ID"
 description: ""
-category: kernel 
-tags: [linux, kernel, process]
+category: Linux内核
+tags: [Linux, kernel, process]
 ---
-{% include JB/setup %}
 
 Linux 内核使用 `task_struct` 数据结构来关联所有与进程有关的数据和结构，Linux 内核所有涉及到进程和程序的所有算法都是围绕该数据结构建立的，是内核中最重要的数据结构之一。该数据结构在内核文件 `include/linux/sched.h` 中定义，在Linux 3.8 的内核中，该数据结构足足有 380 行之多，在这里我不可能逐项去描述其表示的含义，本篇文章只关注该数据结构如何来组织和管理进程ID的。
 
@@ -98,7 +97,7 @@ struct task_struct {
 	struct task_struct *group_leader;	// threadgroup leader
 
 	struct pid_link pids[PIDTYPE_MAX];
-	
+
 	//...
 };
 
@@ -316,5 +315,3 @@ struct pid *alloc_pid(struct pid_namespace *ns)
 
 * 深入Linux 内核架构（以前不觉得这本书写得多好，现在倒发现还不错，本文很多都是照抄上面的）
 * 周徐达师弟的PPT（让我受益匪浅的一次讨论，周由浅入深告诉我们该数据结构是如何设计出来的，本文主思路就是按照该PPT，在此 **特别感谢**！）
-
-

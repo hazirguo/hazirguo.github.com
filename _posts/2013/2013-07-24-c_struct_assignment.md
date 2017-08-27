@@ -2,10 +2,10 @@
 layout: post
 title: "C语言中结构体赋值"
 description: ""
-category: c_cplusplus 
-tags: [c, struct]
+category: 编程语言
+tags: [c_cplusplus, struct]
 ---
-{% include JB/setup %}
+
 
 今天帮师姐调一个程序的BUG，师姐的程序中有个结构体直接赋值的语句，在我印象中结构体好像是不能直接赋值的，正如数组不能直接赋值那样，我怀疑这个地方有问题，但最后证明并不是这个问题。那么就总结一下C语言中结构体赋值的问题吧：
 ##结构体直接赋值的实现##
@@ -32,13 +32,13 @@ int main()
 	struct_assign();
 	printf("%c %d %lf\n", foo2.a, foo2.b, foo2.c);
 
-	return 0;	
+	return 0;
 }
 {% endhighlight %}
 我在Ubuntu 13.04下使用gcc 4.7.3 编译运行得到的结果，如下所示：
 {% highlight bash %}
 guohl@guohailin:~/Documents/c$ gcc struct_test1.c -o struct_test1
-guohl@guohailin:~/Documents/c$ ./struct_test1 
+guohl@guohailin:~/Documents/c$ ./struct_test1
 a 1 3.140000
 {% endhighlight %}
 可以从结果上看出，结构体直接赋值在C语言下是可行的，我们看看`struct_assign()`函数的汇编实现，从而从底层看看C语言是如何实现两个结构体之间的赋值操作的：
@@ -73,15 +73,15 @@ int main()
 {
 	char *c = (char *) malloc (4*sizeof(char));
 	c[0] = 'a'; c[1] = 'b'; c[2] = 'c'; c[3] = '\0';
-	
+
 	foo1.n = 1;
 	foo1.d[0] = 2; foo1.d[1] = 3;
 	foo1.p_c = c;
 
 	foo2 = foo1;     //assign foo1 to foo2
-	
+
 	printf("%d %lf %lf %s\n", foo2.n, foo2.d[0], foo2.d[1], foo2.p_c);
-	
+
 	return 0;
 }
 {% endhighlight %}
@@ -120,6 +120,3 @@ a = b;
 - [维基百科](http://en.wikipedia.org/)   
 - [Stackoverflow](http://stackoverflow.com)
 - International Standard **ISO/IEC 9899**
-
-
-

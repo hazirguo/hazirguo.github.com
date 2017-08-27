@@ -2,10 +2,10 @@
 layout: post
 title: "Linux Kernel代码艺术——数组初始化"
 description: ""
-category: c_cplusplus 
-tags: [linux, array]
+category: Linux内核
+tags: [c_cplusplus, Linux, array]
 ---
-{% include JB/setup %}
+
 
 前几天看内核中系统调用代码，在系统调用向量表初始化中，有下面这段代码写的让我有点摸不着头脑：
 
@@ -29,7 +29,7 @@ C 语言中数组的初始化，可以在定义时就给出其初始值，以逗
 int my_array[5] = {0, 1, 2, 3, 4};
 {% endhighlight %}
 当然你可以不用显示地去初始化所有的元素，例如，下面的代码就是显示初始化了数组的前三项，后面两项默认为0：
- 
+
 {% highlight c %}
 int my_array[5] = {0, 1, 2};
 {% endhighlight %}

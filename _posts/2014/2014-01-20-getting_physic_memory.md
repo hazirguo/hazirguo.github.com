@@ -2,10 +2,9 @@
 layout: post
 title: "Getting Physical With Memory"
 description: ""
-category: translation 
-tags: [memory, cache]
+category: 技术闲话
+tags: [memory, cache, translation]
 ---
-{% include JB/setup %}
 
 
 当我们试图去了解复杂系统时，去除其抽象层，直接关注最底层，我们会更容易去理解。使用这种方法，我们来看一下内存和 I/O 接口的最简单和基础的层：处理器和总线的接口。这些细节是更上层问题的基础，例如线程同步、Core i7 的需求等。然而，由于我是一个程序员，我将忽略一些 EE 人关注的问题。下面展示的是典型的 Core 2 架构：
@@ -41,7 +40,7 @@ Core 2 处理器有 775 个引脚，大约一半仅仅提供电力，并不传�
 
 ---
 
-**注：** 
+**注：**
 
 * 偶尔看到作者[博客](http://duartes.org/gustavo/blog)，里面的文章我很是喜欢，翻译也只是我来理解作者文章的内容，不建议你们看我翻译，直接看 **[原文](http://duartes.org/gustavo/blog/post/getting-physical-with-memory)**。
 * 如果大家发现我哪地方理解有偏差，欢迎指正。

@@ -2,10 +2,9 @@
 layout: post
 title: "例解 Linux 下 Make 命令"
 description: ""
-category: translation 
-tags: [linux, make, command]
+category: Linux基础
+tags: [Linux, make, command]
 ---
-{% include JB/setup %}
 
 
 Linux 下 **make** 命令是系统管理员和程序员用的最频繁的命令之一。管理员用它通过命令行来编译和安装很多开源的工具，程序员用它来管理他们大型复杂的项目编译问题。本文我们将用一些实例来讨论 make 命令背后的工作机制。
@@ -31,25 +30,25 @@ Application —— GNU Make 3.81
 下面是工程的内容：
 
 {% highlight bash %}
-$ ls 
+$ ls
 anotherTest.c Makefile test.c test.h
 {% endhighlight %}
 
 下面是 Makefile 的内容：
 
 {% highlight makefile %}
-all: test 
+all: test
 
-test: test.o anotherTest.o 
+test: test.o anotherTest.o
 	gcc -Wall test.o anotherTest.o -o test
- 
-test.o: test.c 
-	gcc -c -Wall test.c 
 
-anotherTest.o: anotherTest.c 
-	gcc -c -Wall anotherTest.c 
+test.o: test.c
+	gcc -c -Wall test.c
 
-clean: 
+anotherTest.o: anotherTest.c
+	gcc -c -Wall anotherTest.c
+
+clean:
 	rm -rf *.o test
 {% endhighlight %}
 
@@ -60,9 +59,9 @@ clean:
 为了编译整个工程，你可以简单的使用 `make` 或者在 make 命令后带上目标 `all`。
 
 {% highlight bash %}
-$ make 
-gcc -c -Wall test.c 
-gcc -c -Wall anotherTest.c 
+$ make
+gcc -c -Wall test.c
+gcc -c -Wall anotherTest.c
 gcc -Wall test.o anotherTest.o -o test
 {% endhighlight %}
 
@@ -71,15 +70,15 @@ gcc -Wall test.o anotherTest.o -o test
 如果你再次查看目录内容，里面多了一些 .o 文件和执行文件：
 
 {% highlight bash %}
-$ ls 
+$ ls
 anotherTest.c anotherTest.o Makefile test test.c test.h test.o
 {% endhighlight %}
 
 现在，假设你对 test.c 文件做了一些修改，重新使用 make 编译工程：
 
 {% highlight bash %}
-$ make 
-gcc -c -Wall test.c 
+$ make
+gcc -c -Wall test.c
 gcc -Wall test.o anotherTest.o -o test
 {% endhighlight %}
 
@@ -162,7 +161,7 @@ Trying pattern rule with stem `Makefile’.
 这是一个目录，假设你就在当前目录下:
 
 {% highlight bash %}
-$ ls 
+$ ls
 file file2 frnd frnd1.cpp log1.txt log3.txt log5.txt
 file1 file name with spaces frnd1 frnd.cpp log2.txt log4.txt
 {% endhighlight %}
@@ -170,9 +169,9 @@ file1 file name with spaces frnd1 frnd.cpp log2.txt log4.txt
 但是你想运行的 make 命令的 Makefile 文件保存在 ../make-dir/ 目录下，你可以这样做：
 
 {% highlight bash %}
-$ make -C ../make-dir/ 
-make: Entering directory `/home/himanshu/practice/make-dir’ 
-make: Nothing to be done for `all’. 
+$ make -C ../make-dir/
+make: Entering directory `/home/himanshu/practice/make-dir’
+make: Nothing to be done for `all’.
 make: Leaving directory `/home/himanshu/practice/make-dir
 {% endhighlight %}
 
@@ -188,4 +187,3 @@ make -f my_makefile
 {% endhighlight %}
 
 通过这种方法，make 命令会选择扫描 my_makefile 来代替 Makefile。
-

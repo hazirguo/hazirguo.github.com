@@ -2,10 +2,10 @@
 layout: post
 title: "如何在windows下使用git"
 description: ""
-category: git 
+category: Linux基础
 tags: [git]
 ---
-{% include JB/setup %}
+
 
 在 Windows 下使用Git基本上有两种方法：通过安装 Cygwin 或 msysGit 来使用Git。在两种不同的方案下，Git 的使用与 Linux 环境下的使用基本相同，另外还可以通过安装 msysGit 的图形界面软件 TortoiseGit (用过 SVN 的已经非常熟悉 TortoiseSVN，这里 TortoiseGit 和它有着非常相似的操作界面和方法）来使用 Git。这里我只介绍一下如何安装和使用 msysGit，让大家对 Git 的使用有个基础的了解。
 ## 在windows下安装 msysGit
@@ -31,7 +31,7 @@ msysGit 中 Shell 环境的中文支持很不好，需要进行一些配置。
 下面均使用我们的测试版本库 test.git 来做实验。
 首先我们需要将服务器上的版本库克隆到本地机器，例如我们要将此版本克隆到 E 盘下，我们进入 E 盘，鼠标右键启动 Git Bash，输入命令：
 {% highlight bash %}
-$git clone git@1.0.0.89:test.git 
+$git clone git@1.0.0.89:test.git
 {% endhighlight %}
 即将远程服务器上 test.git 库拷贝到本地，进入该目录，可以看到现在版本库中已有的文件。
 
@@ -73,6 +73,3 @@ $git clone git@1.0.0.89:test.git
 
 * Git 权威指南    蒋鑫 著      机械工业出版社
 * Pro Git     http://git-scm.com/book
-
-
-

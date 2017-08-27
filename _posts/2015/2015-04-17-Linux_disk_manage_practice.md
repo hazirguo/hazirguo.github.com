@@ -2,10 +2,10 @@
 layout: post
 title: "Linux 磁盘管理实践"
 description: ""
-category: sysadmin 
-tags: [linux, command]
+category: Linux基础
+tags: [Linux, command, disk]
 ---
-{% include JB/setup %} 
+
 
 ## 问题描述
 

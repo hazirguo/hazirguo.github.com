@@ -2,11 +2,9 @@
 layout: post
 title: "内核探测工具systemtap简介"
 description: ""
-category: systemtap 
-tags: [linux, kernel, systemtap]
+category: Linux内核
+tags: [Linux, kernel, systemtap]
 ---
-
-{% include JB/setup %}
 
 systemtap是内核开发者必须要掌握的一个工具，本文我将简单介绍一下此工具，后续将会有系列文章介绍systemtap的用法。
 
@@ -82,22 +80,22 @@ systemtap是内核开发者必须要掌握的一个工具，本文我将简单�
 创建systemtap脚本文件test2.stp:
 
 	#!/usr/bin/stap
-	
-	probe begin 
+
+	probe begin
 	{
 		log("begin to probe")
 	}
-	
+
 	probe syscall.open
 	{
 		printf ("%s(%d) open (%s)\n", execname(), pid(), argstr)
 	}
-	
+
 	probe timer.ms(4000) # after 4 seconds
 	{
 		exit ()
 	}
-	
+
 	probe end
 	{
 		log("end to probe")
@@ -122,4 +120,3 @@ Systemtap 工作原理是通过将脚本语句翻译成C语句，编译成内核
 
 * systemtap 官网给出了自学教程及相关论文，选择看这个已经足够了： [https://sourceware.org/systemtap/documentation.html](https://sourceware.org/systemtap/documentation.html)
 * IBM 编写的systemtap 指南也是很不错的： [http://www.redbooks.ibm.com/abstracts/redp4469.html](http://www.redbooks.ibm.com/abstracts/redp4469.html)
-

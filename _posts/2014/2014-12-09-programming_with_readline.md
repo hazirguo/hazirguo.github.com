@@ -2,10 +2,9 @@
 layout: post
 title: "GNU Readline 库及编程简介"
 description: ""
-category: c_cplusplus 
-tags: [c, gnu, readline]
+category: 编程语言
+tags: [c_cplusplus, gnu]
 ---
-{% include JB/setup %}
 
 用过 Bash 命令行的一定知道，Bash 有几个特性：
 
@@ -13,12 +12,12 @@ tags: [c, gnu, readline]
 * `↑` 或 `↓` 键可以用来快速输入历史命令
 * 还有一些交互式行编辑快捷键：
     * `C-A` / `C-E` 将光标移到行首/行尾
-    * `C-B` / `C-F` 将光标向左/向右移动一个位置 
+    * `C-B` / `C-F` 将光标向左/向右移动一个位置
     * `C-D` 删除光标下的一个字符
     * `C-K` 删除光标及光标到行尾的所有字符
     * `C-U` 删除光标到行首的所有字符
     * ...
-    
+
 同样的操作在很多交互式程序都有类似的操作，例如 ftp、gdb 等等，那么你是否想过这些是如何实现的呢？如果我们要做一个命令行下的交互式开源软件，是否希望也能有这些命令补全、搜索历史命令、行编辑快捷键等等这些人性化的交互方式呢？
 
 要想实现这些，你有两种途径：可以自己写程序实现，或者调用开源的库 Readline Lib。例如上面介绍的 bash、ftp、gdb 等等软件都使用了 GNU 的开源跨平台库，为其提供交互式的文本编辑功能。当然需要注意的是，Readline Library 是 GNU 自由软件，在 GNU GPL V3 协议下发布，因此如果你的程序中需要用到该库，也必须遵守相关协议。
@@ -45,16 +44,16 @@ case	cd	cdup	chmod	close	cr
 `readline` 函数其实已经给用户默认的 `TAB` 补全的功能：**根据当前路径下文件名来补全**。
 
 如果你不想 Readline 根据文件名补全，你可以通过 `rl_bind_key()` 函数来改变 `TAB` 键的行为。该函数的原型为：
- 
+
 {% highlight c %}
 int rl_bind_key(int key, int (*function)());
 {% endhighlight %}
- 
+
 该函数带有两个参数：*key* 是你想绑定键的 ASCII 码字符表示，*function* 是当 *key* 键按下时触发调用函数的地址。如果想按下 `TAB` 键就输入一个制表符本身，可以将 `TAB` 绑定到 `rl_insert()` 函数，这是 Readline 库提供的函数。如果 *key* 不是有效的 ASCII 码值（0~255之间），`rl_bind_key()` 返回非 0。
 
 这样，禁止 `TAB` 的默认行为，下面这样做就可以了：
 
-{% highlight c %} 
+{% highlight c %}
 rl_bind_key('\t', rl_insert);
 {% endhighlight %}
 
@@ -99,7 +98,7 @@ Readline 补全的工作原理如下：
 
 * 用户接口函数 `rl_complete()` 调用 `rl_completion_matches()` 来产生可能的补全列表；
 * 内部函数 `rl_completion_matches()` 使用程序提供的 *generator*  函数来产生补全列表，并返回这些匹配的数组，在此之前需要将 *generator* 函数的地址放到 `rl_completion_entry_function` 变量中，例如上面提到的按文件名或用户名补全函数就是不同的 *generators*；
-* *generator* 函数在 `rl_completion_matches()` 中不断被调用，每次返回一个字符串。*generator* 函数带有两个参数：*text* 是需要补全的单词的部分，*state* 在函数第一次调用时为 0，接下来调用时非 0。*generator* 函数返回 `(char *)NULL` 通知 `rl_completion_matches()` 没有剩下可能的匹配。 
+* *generator* 函数在 `rl_completion_matches()` 中不断被调用，每次返回一个字符串。*generator* 函数带有两个参数：*text* 是需要补全的单词的部分，*state* 在函数第一次调用时为 0，接下来调用时非 0。*generator* 函数返回 `(char *)NULL` 通知 `rl_completion_matches()` 没有剩下可能的匹配。
 
 Readline 库中有个变量 `rl_attempted_completion_function`，改变量类型是一个函数指针 `rl_completion_func_t *`，我们可以将该变量设置我们自定义的产生匹配的函数，该按下 `TAB` 键时会调用该函数，函数具有三个参数：
 

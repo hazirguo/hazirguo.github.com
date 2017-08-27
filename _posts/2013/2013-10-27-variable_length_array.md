@@ -2,10 +2,10 @@
 layout: post
 title: "GCC 中零长数组与变长数组"
 description: ""
-category: c_cplusplus 
-tags: [c, array]
+category: 编程语言
+tags: [c_cplusplus, array]
 ---
-{% include JB/setup %}
+
 
 
 前两天看程序，发现在某个函数中有下面这段程序：
@@ -28,9 +28,9 @@ int array3[n]; 		//invalid
 ## C 语言中变长数组
 最官方的解释应该是 C 语言的规范和编译器的规范说明了。
 
-* 在 ISO/IEC9899 标准的 [6.7.5.2 Array declarators](http://busybox.net/~landley/c99-draft.html#6.7.5.2) 
+* 在 ISO/IEC9899 标准的 [6.7.5.2 Array declarators](http://busybox.net/~landley/c99-draft.html#6.7.5.2)
 中明确说明了数组的长度可以为变量的，称为**变长数组**（VLA，variable length array）。（*注：这里的变长指的是数组的长度是在运行时才能决定，但一旦决定在数组的生命周期内就不会再变。*）
-* 在 GCC 标准规范的 [6.19 Arrays of Variable Length](http://gcc.gnu.org/onlinedocs/gcc/Variable-Length.html) 中指出，作为编译器扩展，GCC 在 C90 模式和 C++ 编译器下遵守 ISO C99 关于变长数组的规范。 
+* 在 GCC 标准规范的 [6.19 Arrays of Variable Length](http://gcc.gnu.org/onlinedocs/gcc/Variable-Length.html) 中指出，作为编译器扩展，GCC 在 C90 模式和 C++ 编译器下遵守 ISO C99 关于变长数组的规范。
 
 这下，终于安心了，原来这种语法确实是 C 语言规范，GCC 非常完美的支持了 ISO C99。但令人遗憾的是，我们的大学老师教给我们的还是老一套，虽然关系不是很大，但这也从侧面反映了我们的教育是多么地滞后！而且我们读的 C 语言书，在不加任何限定的条件下，就说某某语法是不对的，读书的人只能很痛苦地记下！小小吐槽一下，下面继续...
 

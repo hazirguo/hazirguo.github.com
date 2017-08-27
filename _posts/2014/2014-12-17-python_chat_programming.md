@@ -2,10 +2,10 @@
 layout: post
 title: "Python Socket 编程——聊天室示例程序"
 description: ""
-category: python 
+category: 编程语言
 tags: [python, socket, web]
 ---
-{% include JB/setup %}
+
 
 [上一篇](http://blog.codingcorner.cn/python/2014/12/11/python_socket_programming) 我们学习了简单的 Python TCP Socket 编程，通过分别写服务端和客户端的代码了解基本的 Python Socket 编程模型。本文再通过一个例子来加强一下对 Socket 编程的理解。
 
@@ -110,9 +110,9 @@ def broadcast_data (sock, message):
 
 {% highlight python %}
 # Tcp Chat server
- 
+
 import socket, select
- 
+
 #Function to broadcast chat messages to all connected clients
 def broadcast_data (sock, message):
     #Do not send the message to master socket and the client who has send us the message
@@ -124,29 +124,29 @@ def broadcast_data (sock, message):
                 # broken socket connection may be, chat client pressed ctrl+c for example
                 socket.close()
                 CONNECTION_LIST.remove(socket)
- 
+
 if __name__ == "__main__":
-     
+
     # List to keep track of socket descriptors
     CONNECTION_LIST = []
     RECV_BUFFER = 4096 # Advisable to keep it as an exponent of 2
     PORT = 5000
-     
+
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # this has no effect, why ?
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server_socket.bind(("0.0.0.0", PORT))
     server_socket.listen(10)
- 
+
     # Add server socket to the list of readable connections
     CONNECTION_LIST.append(server_socket)
- 
+
     print "Chat server started on port " + str(PORT)
- 
+
     while 1:
         # Get the list sockets which are ready to be read through select
         read_sockets,write_sockets,error_sockets = select.select(CONNECTION_LIST,[],[])
- 
+
         for sock in read_sockets:
             #New connection
             if sock == server_socket:
@@ -154,9 +154,9 @@ if __name__ == "__main__":
                 sockfd, addr = server_socket.accept()
                 CONNECTION_LIST.append(sockfd)
                 print "Client (%s, %s) connected" % addr
-                 
+
                 broadcast_data(sockfd, "[%s:%s] entered room\n" % addr)
-             
+
             #Some incoming message from a client
             else:
                 # Data recieved from client, process it
@@ -166,21 +166,21 @@ if __name__ == "__main__":
                     data = sock.recv(RECV_BUFFER)
                     if data:
                         broadcast_data(sock, "\r" + '<' + str(sock.getpeername()) + '> ' + data)                
-                 
+
                 except:
                     broadcast_data(sock, "Client (%s, %s) is offline" % addr)
                     print "Client (%s, %s) is offline" % addr
                     sock.close()
                     CONNECTION_LIST.remove(sock)
                     continue
-     
+
     server_socket.close()
 {% endhighlight %}
 
 在控制台下运行该程序：
 
 {% highlight bash %}
-$ python chat_server.py 
+$ python chat_server.py
 Chat server started on port 5000
 {% endhighlight %}
 
@@ -196,7 +196,7 @@ Chat server started on port 5000
 
 {% highlight python %}
 rlist = [sys.stdin, s]
-         
+
 # Get the list sockets which are readable
 read_list, write_list, error_list = select.select(rlist , [], [])
 {% endhighlight %}
@@ -206,40 +206,40 @@ read_list, write_list, error_list = select.select(rlist , [], [])
 {% highlight python %}
 # telnet program example
 import socket, select, string, sys
- 
+
 def prompt() :
     sys.stdout.write('<You> ')
     sys.stdout.flush()
- 
+
 #main function
 if __name__ == "__main__":
-     
+
     if(len(sys.argv) < 3) :
         print 'Usage : python telnet.py hostname port'
         sys.exit()
-     
+
     host = sys.argv[1]
     port = int(sys.argv[2])
-     
+
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(2)
-     
+
     # connect to remote host
     try :
         s.connect((host, port))
     except :
         print 'Unable to connect'
         sys.exit()
-     
+
     print 'Connected to remote host. Start sending messages'
     prompt()
-     
+
     while 1:
         rlist = [sys.stdin, s]
-         
+
         # Get the list sockets which are readable
         read_list, write_list, error_list = select.select(rlist , [], [])
-         
+
         for sock in read_list:
             #incoming message from remote server
             if sock == s:
@@ -251,7 +251,7 @@ if __name__ == "__main__":
                     #print data
                     sys.stdout.write(data)
                     prompt()
-             
+
             #user entered a message
             else :
                 msg = sys.stdin.readline()

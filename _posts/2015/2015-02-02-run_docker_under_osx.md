@@ -2,10 +2,10 @@
 layout: post
 title: "Mac OS X 下安装运行 Docker"
 description: ""
-category: docker 
+category: Docker
 tags: [osx, mac, docker]
 ---
-{% include JB/setup %} 
+
 
 由于 Docker 引擎只能在 Linux 内核上运行，因此你想在 OS X 上运行 Docker，你必须使用虚拟机（VM)安装一个 Linux 内核的操作系统。使用 OS X Docker 客户端来控制虚拟化 Docker 引擎来建立、运行和管理 Docker 容器。
 
@@ -60,14 +60,3 @@ $ docker run hello-world
 
 * [Installing Docker on Mac OS X--Docker Docs](https://docs.docker.com/installation/mac/)
 * [利用Docker构建开发环境--UC技术博客](http://tech.uc.cn/?p=2726)
-
-
-
-
-
-
-
-
-
-
-

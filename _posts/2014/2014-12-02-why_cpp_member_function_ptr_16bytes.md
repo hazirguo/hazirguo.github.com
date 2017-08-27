@@ -2,10 +2,10 @@
 layout: post
 title: "为什么 C++ 中成员函数指针是 16 字节？"
 description: ""
-category: c_cplusplus 
-tags: [cpp, pointer, OO]
+category: 编程语言
+tags: [c_cplusplus, pointer, OO]
 ---
-{% include JB/setup %}
+
 
 当我们讨论指针时，通常假设它是一种可以用 `void *` 指针来表示的东西，在 x86_64 平台下是 8 个字节大小。例如，下面是来自 [维基百科中关于 x86_64 的文章](http://en.wikipedia.org/wiki/X86-64#Architectural_features) 的摘录：
 
@@ -183,4 +183,3 @@ B's this:    0x7fff535dfb48
 
 ---
 文章出自：[http://741mhz.com/wide-pointers/](http://741mhz.com/wide-pointers/)
-

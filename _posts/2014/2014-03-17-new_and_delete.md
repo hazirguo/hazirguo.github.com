@@ -2,10 +2,10 @@
 layout: post
 title: "你真的知道 new 和 delete 吗？"
 description: ""
-category: c_cplusplus 
-tags: [new, delete]
+category: 编程语言
+tags: [new, delete, c_cplusplus]
 ---
-{% include JB/setup %}
+
 
 
 在 C++ 中，你也许经常使用 new 和 delete 来动态申请和释放内存，但你可曾想过以下问题呢？
@@ -32,7 +32,7 @@ tags: [new, delete]
 
 	void *operator new(size_t);     //allocate an object
 	void *operator delete(void *);    //free an object
-	
+
 	void *operator new[](size_t);     //allocate an array
 	void *operator delete(void *);    //free an array
 
@@ -57,7 +57,7 @@ tags: [new, delete]
 	    {
 	        fclose(file);
 	    }
-	
+
 	private:
 	    int var;
 	    FILE *file;
@@ -65,7 +65,7 @@ tags: [new, delete]
 
 很简单，类 A 中有两个私有成员，有一个构造函数和一个析构函数，构造函数中初始化私有变量 var 以及打开一个文件，析构函数关闭打开的文件。
 
-我们使用 
+我们使用
 
 	class *pA = new A(10);
 
@@ -88,7 +88,7 @@ tags: [new, delete]
 delete 所做的事情如下图所示：
 
 ![](http://i.imgur.com/1Vvr9Fz.jpg)
-	
+
 delete 就做了两件事情：
 
 1. 调用 pA 指向对象的析构函数，对打开的文件进行关闭。
@@ -177,4 +177,3 @@ delete 就做了两件事情：
 ## 参考资料： ##
 
 C++ Primer 第四版
-

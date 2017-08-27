@@ -2,10 +2,9 @@
 layout: post
 title: "从一道题目来看学习 C++ 的类对象的构造"
 description: ""
-category: c_cplusplus 
-tags: []
+category: 编程语言
+tags: [c_cplusplus, review]
 ---
-{% include JB/setup %}
 
 
 朋友某天在 QQ 上问我一道 C++ 的题目：
@@ -43,7 +42,7 @@ int main()
 {
     A a;
     B b(a);
-    
+
     return 0;
 }
 ```
@@ -90,7 +89,7 @@ className (parameters list) : initializer list
 class A {
 public:
 	//method 1
-	A() 
+	A()
 	{
 		var_int = 42;
 		var_str = "helloworld";

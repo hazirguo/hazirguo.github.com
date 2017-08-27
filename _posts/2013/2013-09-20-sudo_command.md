@@ -2,10 +2,10 @@
 layout: post
 title: "sudo 命令情景分析"
 description: ""
-category: Linux 
-tags: [command, sudo]
+category: Linux基础
+tags: [command, sudo, Linux]
 ---
-{% include JB/setup %}
+
 
 
 Linux 下使用 `sudo` 命令，可以让普通用户也能执行一些或者全部的 root 命令。本文就对我们常用到 sudo 操作情景进行简单分析，通过一些例子来了解 sudo 命令相关的技巧。
@@ -79,7 +79,7 @@ sudo head -n 4 /etc/sudoers
 #
 {% endhighlight %}
 
-## 情景四：shell 内置命令如何使用 sudo 
+## 情景四：shell 内置命令如何使用 sudo
 shell 是一个交互式的应用程序，在执行外部命令时通过 fork 来创建一个子进程，再通过 exec 来加载外部命令的程序来执行，但是如果一个命令是 shell 内置命令，那么只能直接由 shell 来运行。sudo 的意思是，以别的用户（如root）的权限来 fork 一个进程，加载程序并运行，因此 sudo 后面不能跟 shell 的内置命令，如：
 
 {% highlight bash %}
@@ -108,20 +108,20 @@ umask is a shell builtin
 我使用系统为Ubuntu13.04 为改名字，但有些系统名为`/etc/syslog.conf`，注意不同发行版之间的差别，在该文件加入下面一行：   
 
 		local2.debug	/var/log/sudo.log    #空白不能用空格，必须用tab
-		
+
 * 修改 `/etc/sudoers` 配置文件   
 注意网上很多关于sudo日志文件配置都缺少这一步！在该文件中加入下面一行：
 
 		Defaults	logfile=/var/log/sudo.
-		
+
 * 重启 syslog 服务：   
 
 		$ sudo service rsyslog restart
-		
+
 * 查看 sudo 日志记录：    
 经过上面的配置，sudo 的所有成功和不成功的sudo命令都记录到文件/var/log/sudo.log 中，例如我运行几条sudo 命令之后，查看该文件的记录如下：  
- 
-		$ cat sudo.log 
+
+		$ cat sudo.log
 		Sep 20 22:10:51 : guohailin : TTY=pts/1 ; PWD=/var/log ; USER=root ;
 	    	COMMAND=/bin/cat /etc/sudoers
 		Sep 20 22:11:36 : guohailin : TTY=pts/1 ; PWD=/var/log ; USER=root ;
@@ -130,7 +130,7 @@ umask is a shell builtin
 	    	COMMAND=/bin/ls
 		Sep 20 22:12:08 : guohailin : TTY=pts/1 ; PWD=/var/log ; USER=root ;
 	    	COMMAND=/bin/ls /root/
-		
+
 
 ## 参考资料：
 * [sudo mannual](http://www.sudo.ws/sudoers.man.html)

@@ -2,13 +2,12 @@
 layout: post
 title: "Linux 中僵尸进程"
 description: ""
-category: linux 
-tags: [linux, process]
+category: Linux基础
+tags: [Linux, process]
 ---
-{% include JB/setup %}
 
 
-Linux 系统中僵尸进程和现实中僵尸（虽然我也没见过）类似，虽然已经死了，但是由于没人给它们收尸，还能四处走动。僵尸进程指的是那些虽然已经终止的进程，但仍然保留一些信息，等待其父进程为其收尸。配图源自 [Flickr](http://www.flickr.com/photos/dhollister/2596483147/) 
+Linux 系统中僵尸进程和现实中僵尸（虽然我也没见过）类似，虽然已经死了，但是由于没人给它们收尸，还能四处走动。僵尸进程指的是那些虽然已经终止的进程，但仍然保留一些信息，等待其父进程为其收尸。配图源自 [Flickr](http://www.flickr.com/photos/dhollister/2596483147/)
 ![2596483147_58d6bae3b1_z](https://f.cloud.github.com/assets/3265880/1352596/ab904876-3739-11e3-87dd-1faa6e8e42de.jpg)
 
 
@@ -69,7 +68,7 @@ guohailin@guohailin:~$ ps aux | grep -w 'Z'
 
 从上面可以看出，系统中多了一个僵尸进程。但如果等父进程睡眠醒来退出之后，我们再次查看系统进程信息，发现刚才的僵尸进程不见了。
 {% highlight bash %}
-guohailin@guohailin:~/Documents$ ./zombie 
+guohailin@guohailin:~/Documents$ ./zombie
 in parent process, sleep for one miniute...zZ...
 in child process, and exit!
 after sleeping, and exit!
@@ -132,7 +131,7 @@ int main()
     }
 
     return 0;
-}	
+}
 {% endhighlight %}
 
 

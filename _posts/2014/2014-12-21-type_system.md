@@ -2,10 +2,9 @@
 layout: post
 title: "编程语言的类型系统"
 description: ""
-category: programming 
-tags: [python, type]
+category: 编程语言
+tags: [python, java]
 ---
-{% include JB/setup %}
 
 
 每学一门新的编程语言时，在看到介绍该门编程语言的特点时，经常会遇到 *静态*、*动态*、*强*、*弱* 、*隐式*、*显式* 类型等字样，似懂非懂，这里结合网上的资料总结一下它们的含义以及区别，描述不一定专业、准确，但求能进一步理解这些词的概念即可。
@@ -95,4 +94,3 @@ d = add(a, int(b) )
 这篇文章只是给出了一个非形式化定义，旨在理解各种不同编程在类型系统的设计思想，当然本文只提到类型系统的冰山一角。
 
 本文绝大数内容编译自这篇[文章](https://pythonconquerstheuniverse.wordpress.com/2009/10/03/static-vs-dynamic-typing-of-programming-languages/)，还参考 [知乎问答](http://www.zhihu.com/question/19918532)，wiki 相关词条，特致谢！
-

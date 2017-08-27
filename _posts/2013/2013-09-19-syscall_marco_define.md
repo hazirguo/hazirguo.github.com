@@ -2,10 +2,10 @@
 layout: post
 title: "Linux Kernel代码艺术——系统调用宏定义"
 description: ""
-category: Linux 
+category: Linux内核
 tags: [kernel, syscall, marco]
 ---
-{% include JB/setup %}
+
 
 我们习惯在SI（Source Insight)中阅读Linux内核，SI会建立符号表数据库，能非常方便地跳转到变量、宏、函数等的定义处。但在处理系统调用的函数时，却会遇到一些麻烦：我们知道系统调用函数名的特点是sys_×××，例如我们想找open函数的内核系统调用代码，在SI提供的符号表中搜索sys_open，能找到函数的声明：
 {% highlight c %}
@@ -191,4 +191,3 @@ static inline long SYSC_open(const char __user * filename, int flags, umode_t mo
 * [https://bugzilla.redhat.com/show_bug.cgi?format=multiple&id=479969](https://bugzilla.redhat.com/show_bug.cgi?format=multiple&id=479969)  Redhat 公司报告的关于 CVE-2009-0029 漏洞的说明
 * [http://stackoverflow.com/questions/15105313/linux-kernel-system-call-naming-convention](http://stackoverflow.com/questions/15105313/linux-kernel-system-call-naming-convention)  Stackoverflow上这个问题的回答让我引导我一步一步解决
 * [http://sota.gen.nz/compat2/](http://sota.gen.nz/compat2/) 该博客描述了关于内核系统调用令一个著名的漏洞 CVE-2010-3301，CVE的说明[在这](http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2010-3301&cid=1)
-

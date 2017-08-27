@@ -2,10 +2,9 @@
 layout: post
 title: "Linux 下系统调用的三种方法"
 description: ""
-category: Linux 
+category: Linux内核
 tags: [syscall, kernel]
 ---
-{% include JB/setup %}
 
 系统调用（System Call）是操作系统为在用户态运行的进程与硬件设备（如CPU、磁盘、打印机等）进行交互提供的一组接口。当用户进程需要发生系统调用时，CPU 通过软中断切换到内核态开始执行内核系统调用函数。下面介绍Linux 下三种发生系统调用的方法：
 
@@ -23,11 +22,11 @@ glibc 是 Linux 下使用的开源的标准 C 库，它是 GNU 发布的 libc �
 #include <sys/stat.h>
 #include <errno.h>
 #include <stdio.h>
- 
+
 int main()
 {
         int rc;
- 
+
         rc = chmod("/etc/passwd", 0444);
         if (rc == -1)
                 fprintf(stderr, "chmod failed, errno = %d\n", errno);
@@ -68,12 +67,12 @@ long int syscall (long int sysno, ...)
 #include <unistd.h>
 #include <sys/syscall.h>
 #include <errno.h>
- 
+
 int main()
 {
         int rc;
         rc = syscall(SYS_chmod, "/etc/passwd", 0444);
- 
+
         if (rc == -1)
                 fprintf(stderr, "chmod failed, errno = %d\n", errno);
         else
@@ -99,23 +98,23 @@ int main()
         long rc;
         char *file_name = "/etc/passwd";
         unsigned short mode = 0444;
- 
+
         asm(
                 "int $0x80"
                 : "=a" (rc)
                 : "0" (SYS_chmod), "b" ((long)file_name), "c" ((long)mode)
         );
- 
+
         if ((unsigned long)rc >= (unsigned long)-132) {
                 errno = -rc;
                 rc = -1;
         }
- 
+
         if (rc == -1)
                 fprintf(stderr, "chmode failed, errno = %d\n", errno);
         else
                 printf("success!\n");
- 
+
         return 0;
 }
 {% endhighlight %}
@@ -130,4 +129,3 @@ int main()
 
 * Understanding The Linux Kernel, the 3rd edtion
 * The GNU C Library Reference Manual, for version 2.18
-

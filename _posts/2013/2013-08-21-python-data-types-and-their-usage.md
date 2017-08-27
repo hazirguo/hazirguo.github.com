@@ -2,11 +2,9 @@
 layout: post
 title: "Python 数据类型及其用法"
 description: ""
-category: python 
+category: 编程语言
 tags: [python]
 ---
-{% include JB/setup %}
-
 
 本文总结一下Python中用到的各种数据类型，以及如何使用可以使得我们的代码变得简洁。
 ##基本结构##
@@ -61,7 +59,7 @@ Python中字符串也是可迭代的，迭代的概念待会在列表和字典�
 else:
 	print ('"david" is lowercase')
 
-	
+
 "david" is lowercase
 {% endhighlight %}
 Python 中`if` 语句用来检查第一个条件是否为真，如果为True就会打印出 "david" is uppercase。然而在这个例子中，它返回False，所以 else 块执行，打印出 "david" is lowercase 。
@@ -206,7 +204,7 @@ A Person
 类似与列表，我们还有[集合（Sets）](http://docs.python.org/3.3/library/sets.html) 以及 [Frozensets](http://docs.python.org/3.3/library/stdtypes.html#frozenset) 的数据结构。集合允许我们像列表那样存储数据，但不同的是集合里不允许有重复元素。当我们想确保每个数据只有一份拷贝的时候，这个是非常棒的。Frozensets 几乎和普通的集合是一样的，但它是不可变的类型(immutable)，这意味着一旦它被创建，它就不能再以任何方式改变。
 
 同样，我们创建集合的方法有列举法（注意：相同的元素会自动删除）：
-{% highlight python %}	
+{% highlight python %}
 >>> a = {1,2,3,3}
 set([1, 2, 3])
 {% endhighlight %}
@@ -221,10 +219,10 @@ Python 提供了强大的集合操作方法，我们可以完成数学中集合�
 >>> b = {3,4,5}
 >>> a.union(b)
 set([1, 2, 3, 4, 5])
->>> 
+>>>
 >>> a.difference(b)
 set([1, 2])
->>> 
+>>>
 >>> a.intersection(b)
 set([3])
 {% endhighlight %}
@@ -235,7 +233,7 @@ Python 同样也提供列举法和构造法来创建一个元组：
 {% highlight python %}
 >>> my_tuple = (1,2,3,4)
 (1,2,3,4)
->>> 
+>>>
 >>> a = tuple([1,2,3,4])
 >>> type(a)
 <class 'tuple'>
@@ -245,7 +243,7 @@ Python 同样也提供列举法和构造法来创建一个元组：
 >>> empty_tup = ()
 >>> type(empty_tup)
 <class 'tuple'>
->>> 
+>>>
 >>> empty_tuple = tuple()
 <class 'tuple'>
 >>>
@@ -268,5 +266,3 @@ Python 同样也提供列举法和构造法来创建一个元组：
 参考资料：   
 http://tech.pro/tutorial/1151/python-data-types-and-their-usage  　　　　 主要译自該篇文章   
 http://docs.python.org/3.3/　　　　　   Python 官方文档，最权威最全面的Python学习资料
-
-

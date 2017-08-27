@@ -2,10 +2,10 @@
 layout: post
 title: "Python Socket 网络编程"
 description: ""
-category: python 
+category: 编程语言
 tags: [python, socket, web]
 ---
-{% include JB/setup %}
+
 
 Socket 是进程间通信的一种方式，它与其他进程间通信的一个主要不同是：它能实现不同主机间的进程间通信，我们网络上各种各样的服务大多都是基于 Socket 来完成通信的，例如我们每天浏览网页、QQ 聊天、收发 email 等等。要解决网络上两台主机之间的进程通信问题，首先要唯一标识该进程，在 TCP/IP 网络协议中，就是通过 (IP地址，协议，端口号) 三元组来标识进程的，解决了进程标识问题，就有了通信的基础了。
 
@@ -21,12 +21,12 @@ TCP 是一种面向连接的传输层协议，TCP Socket 是基于一种 Client-
 
 {% highlight python %}
 #Socket client example in python
- 
+
 import socket   #for sockets
- 
+
 #create an AF_INET, STREAM socket (TCP)
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
- 
+
 print 'Socket Created'
 {% endhighlight %}
 
@@ -44,17 +44,17 @@ print 'Socket Created'
 
 {% highlight python %}
 #handling errors in python socket programs
- 
+
 import socket   #for sockets
 import sys  #for exit
- 
+
 try:
     #create an AF_INET, STREAM socket (TCP)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 except socket.error, msg:
     print 'Failed to create socket. Error code: ' + str(msg[0]) + ' , Error message : ' + msg[1]
     sys.exit();
- 
+
 print 'Socket Created'
 {% endhighlight %}
 
@@ -71,15 +71,15 @@ Python 提供了一个简单的函数 `socket.gethostbyname` 来获得远程主�
 {% highlight python %}
 host = 'www.google.com'
 port = 80
- 
+
 try:
     remote_ip = socket.gethostbyname( host )
- 
+
 except socket.gaierror:
     #could not resolve
     print 'Hostname could not be resolved. Exiting'
     sys.exit()
-     
+
 print 'Ip address of ' + host + ' is ' + remote_ip
 {% endhighlight %}
 
@@ -88,7 +88,7 @@ print 'Ip address of ' + host + ' is ' + remote_ip
 {% highlight python %}
 #Connect to remote server
 s.connect((remote_ip , port))
- 
+
 print 'Socket Connected to ' + host + ' on ip ' + remote_ip
 {% endhighlight %}
 
@@ -108,7 +108,7 @@ Socket Connected to www.google.com on ip 173.194.38.145
 {% highlight python %}
 #Send some data to remote server
 message = "GET / HTTP/1.1\r\n\r\n"
- 
+
 try :
     #Set the whole string
     s.sendall(message)
@@ -116,7 +116,7 @@ except socket.error:
     #Send failed
     print 'Send failed'
     sys.exit()
- 
+
 print 'Message send successfully'
 {% endhighlight %}
 
@@ -129,7 +129,7 @@ print 'Message send successfully'
 {% highlight python %}
 #Now receive data
 reply = s.recv(4096)
- 
+
 print reply
 {% endhighlight %}
 
@@ -202,19 +202,19 @@ socket 中另一种行为称为**SERVER**，服务器使用 socket 来接收连�
 {% highlight python %}
 import socket
 import sys
- 
+
 HOST = ''   # Symbolic name meaning all available interfaces
 PORT = 8888 # Arbitrary non-privileged port
- 
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print 'Socket created'
- 
+
 try:
     s.bind((HOST, PORT))
 except socket.error , msg:
     print 'Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
     sys.exit()
-     
+
 print 'Socket bind complete'
 {% endhighlight %}
 
@@ -239,7 +239,7 @@ print 'Socket now listening'
 {% highlight python %}
 #wait to accept a connection - blocking call
 conn, addr = s.accept()
- 
+
 #display client information
 print 'Connected with ' + addr[0] + ':' + str(addr[1])
 {% endhighlight %}
@@ -278,33 +278,33 @@ Connected with 127.0.0.1:59954
 {% highlight python %}
 import socket
 import sys
- 
+
 HOST = ''   # Symbolic name meaning all available interfaces
 PORT = 8888 # Arbitrary non-privileged port
- 
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print 'Socket created'
- 
+
 try:
     s.bind((HOST, PORT))
 except socket.error , msg:
     print 'Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
     sys.exit()
-     
+
 print 'Socket bind complete'
- 
+
 s.listen(10)
 print 'Socket now listening'
- 
+
 #wait to accept a connection - blocking call
 conn, addr = s.accept()
- 
+
 print 'Connected with ' + addr[0] + ':' + str(addr[1])
- 
+
 #now keep talking with the client
 data = conn.recv(1024)
 conn.sendall(data)
- 
+
 conn.close()
 s.close()
 {% endhighlight %}
@@ -333,37 +333,37 @@ Connection closed by foreign host.
 {% highlight python %}
 import socket
 import sys
- 
+
 HOST = ''   # Symbolic name meaning all available interfaces
 PORT = 5000 # Arbitrary non-privileged port
- 
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print 'Socket created'
- 
+
 try:
     s.bind((HOST, PORT))
 except socket.error , msg:
     print 'Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
     sys.exit()
-     
+
 print 'Socket bind complete'
- 
+
 s.listen(10)
 print 'Socket now listening'
- 
+
 #now keep talking with the client
 while 1:
     #wait to accept a connection - blocking call
     conn, addr = s.accept()
     print 'Connected with ' + addr[0] + ':' + str(addr[1])
-     
+
     data = conn.recv(1024)
     reply = 'OK...' + data
-    if not data: 
+    if not data:
         break
-     
+
     conn.sendall(reply)
- 
+
 conn.close()
 s.close()
 {% endhighlight %}
@@ -380,54 +380,54 @@ s.close()
 import socket
 import sys
 from thread import *
- 
+
 HOST = ''   # Symbolic name meaning all available interfaces
 PORT = 8888 # Arbitrary non-privileged port
- 
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print 'Socket created'
- 
+
 #Bind socket to local host and port
 try:
     s.bind((HOST, PORT))
 except socket.error , msg:
     print 'Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
     sys.exit()
-     
+
 print 'Socket bind complete'
- 
+
 #Start listening on socket
 s.listen(10)
 print 'Socket now listening'
- 
+
 #Function for handling connections. This will be used to create threads
 def clientthread(conn):
     #Sending message to connected client
     conn.send('Welcome to the server. Type something and hit enter\n') #send only takes string
-     
+
     #infinite loop so that function do not terminate and thread do not end.
     while True:
-         
+
         #Receiving from client
         data = conn.recv(1024)
         reply = 'OK...' + data
-        if not data: 
+        if not data:
             break
-     
+
         conn.sendall(reply)
-     
+
     #came out of loop
     conn.close()
- 
+
 #now keep talking with the client
 while 1:
     #wait to accept a connection - blocking call
     conn, addr = s.accept()
     print 'Connected with ' + addr[0] + ':' + str(addr[1])
-     
+
     #start new thread takes 1st argument as a function name to be run, second is the tuple of arguments to the function.
     start_new_thread(clientthread ,(conn,))
- 
+
 s.close()
 {% endhighlight %}
 
@@ -469,7 +469,7 @@ Connected with 127.0.0.1:60731
 ## 参考资料
 
 * 主要译自： [Python socket – network programming tutorial](http://www.binarytides.com/python-socket-programming-tutorial/)
-* 进一步学习： 
+* 进一步学习：
     * [Sockets programming in Python](http://www.ibm.com/developerworks/linux/tutorials/l-pysocks/)
     * [Python socket – chat server and client with code example](http://www.binarytides.com/code-chat-application-server-client-sockets-python/)
     * [Linux Socket编程（不限Linux）](http://www.cnblogs.com/skynet/archive/2010/12/12/1903949.html)

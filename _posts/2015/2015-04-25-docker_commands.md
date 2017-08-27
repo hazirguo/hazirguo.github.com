@@ -1,4 +1,11 @@
-
+---
+layout: post
+title: "Docker 常用命令总结"
+description: ""
+category: Docker
+tags: [docker, command]
+published: false
+---
 
 
 ## tag
@@ -77,11 +84,3 @@ Register or log in to a Docker registry server, if no server is specified "https
   -p, --password=""    Password
   -u, --username=""    Username
 ```
-
-
-
-
-
-
-
-
