@@ -35,10 +35,10 @@ bash 可以有不同的调出的方式，例如开机之后按 `Alt+F1`~`Alt+F6`
 
 |    bash 工作模式   |   触发方式     |  读取配置文件    |   备注    |
 |------------------|---------------|----------------|----------|
-| login + interactive |  1. 登陆 Linux 获取的第一个 shell</br> 2. 通过 ssh *user_name*@*romote_ip* 登陆获取到的 shell </br> 3. 运行命令 bash -l 进入的 shell         |  1. 首先读取 /etc/profile 文件</br> 2. 再从下面三个文件读取到第一个存在的文件 ~/.bash_profile、~/.bash_login、~/.profile          |  /etc/profile 会依次读取 /etc/profile.d 下所有文件        |
+| login + interactive |  1. 登陆 Linux 获取的第一个 shell<br> 2. 通过 ssh *user_name*@*romote_ip* 登陆获取到的 shell <br> 3. 运行命令 bash -l 进入的 shell         |  1. 首先读取 /etc/profile 文件<br> 2. 再从下面三个文件读取到第一个存在的文件 ~/.bash_profile、~/.bash_login、~/.profile          |  /etc/profile 会依次读取 /etc/profile.d 下所有文件        |
 | login + non-interactive | 1. 运行命令 bash -l *script.sh*            |  同上          |   该模式比较少用       |
-| non-login + interactive |  1. 运行命令 bash           |  1. 读取 /etc/bash.bashrc</br> 2. 读取 ~/.bashrc文件          |    ~/.bashrc 一般会读 /etc/bashrc 文件      |
-| non-login + non-interactive | 1. 运行命令 bash *script.sh*</br>              | 1. 读取环境变量 $BASH_ENV 的值，导入该值的配置文件          |   有个特例见下文    |
+| non-login + interactive |  1. 运行命令 bash           |  1. 读取 /etc/bash.bashrc<br> 2. 读取 ~/.bashrc文件          |    ~/.bashrc 一般会读 /etc/bashrc 文件      |
+| non-login + non-interactive | 1. 运行命令 bash *script.sh*              | 1. 读取环境变量 $BASH_ENV 的值，导入该值的配置文件          |   有个特例见下文    |
 
 当然上表只是 bash 的默认读取配置文件的方式，建议你在这些配置文件中加些 echo 信息，然后通过不通的方式调用 bash 来实践下。
 
