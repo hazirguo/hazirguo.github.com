@@ -6,7 +6,7 @@ category: Docker
 tags: [docker, network, namespace]
 ---
 
-Dokcer 中容器的网络都是采用成熟的技术来实现的，例如 network namespace、iptables、Linux bridge、Linux veth 等等，要理解起来其实难度不大。这篇文章看看 Docker 网络中网络命名空间在其中的应用，网络命名空间是 Linux kernel 提供的一种轻量级网络隔离方案，隔离了包括网络设备、IPv4和IPv6协议栈、IP路由表、防火墙、/proc/net目录、/sys/class/net目录、端口（socket）等等。
+Docker 中容器的网络都是采用成熟的技术来实现的，例如 network namespace、iptables、Linux bridge、Linux veth 等等，要理解起来其实难度不大。这篇文章看看 Docker 网络中网络命名空间在其中的应用，网络命名空间是 Linux kernel 提供的一种轻量级网络隔离方案，隔离了包括网络设备、IPv4和IPv6协议栈、IP路由表、防火墙、/proc/net目录、/sys/class/net目录、端口（socket）等等。
 
 ## Docker 中的 bridge 网络
 
